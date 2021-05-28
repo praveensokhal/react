@@ -10,7 +10,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Navbar></Navbar>
     <Coursel></Coursel>
-    <App />
+    {/* <App /> */}
   </React.StrictMode>,
   document.getElementById('root')
 );
