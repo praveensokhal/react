@@ -2,15 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import Navbar from './components/Navbar';
-import Coursel from './components/Coursel';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Navbar></Navbar>
-    <Coursel></Coursel>
-    {/* <App /> */}
+
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );
