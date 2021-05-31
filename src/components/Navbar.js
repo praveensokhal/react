@@ -3,7 +3,7 @@
 
 let Navbar= (props)=>{
   let searchstring
-  let searchem ="Dd"
+  let searchem =""
   let  search = (event)=>{
     event.preventDefault()
     if(searchstring != null){
@@ -12,7 +12,7 @@ let Navbar= (props)=>{
       console.log("...",searchem)
     }
     else{
-      alert("dsa");
+      alert("please enter");
     }
   }
   let getserchText = (event)=>{
@@ -49,7 +49,7 @@ let Navbar= (props)=>{
               </li>
             
             </ul>
-            <form className="d-flex">
+            <form className="d-flex align-items-end">
               <input className="form-control me-2" onChange = {getserchText} type="search" placeholder="Search" aria-label="Search"/>
            
               <button className="search btn btn-outline-success" onClick={search} type="submit">Search</button>

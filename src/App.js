@@ -1,19 +1,23 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 import Signup from './components/Signup';
 import Navbar from './components/Navbar';
+import Cake from './components/Cake';
 import Coursel from './components/Coursel';
 
 var details = {
   username :"praveen Sokhal",
-  projectname : "strutshop"
+  projectname : "Rangeela"
 }
 function App() {
   return (
     <div >
-     <Navbar details = {details} >hsmbgadg</Navbar>
+     <Navbar details = {details} >Kids</Navbar>
     <Coursel></Coursel>
-    <Signup></Signup>
+
+    <Cake></Cake>
+      <Signup></Signup>
+   
     </div>
   );
 }

@@ -63,3 +63,21 @@ a:hover{
 .help-block-error{
     color: red;
 }
+.list-container{
+  border:1px solid grey;
+  padding:50px;
+  margin: 50px;
+}
+.card {
+  min-height: 200px;
+  height: 600px;
+  border: #ffffff;
+  margin: auto;
+  padding: 15px;
+  position: relative;
+  /* border: 12px solid red; */
+}
+.card-groups{
+  display: flex;
+  flex-flow: row wrap;
+}

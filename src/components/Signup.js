@@ -81,3 +81,4 @@ constructor(){
 }
 
 export default Signup
+// $props.cake.discount ?? 'discount: ' {$props.cake.discount}
