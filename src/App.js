@@ -2,20 +2,30 @@
 import './App.css';
 import Signup from './components/Signup';
 import Navbar from './components/Navbar';
-import Cake from './components/Cake';
+import Cardlist from './components/Cardlist';
 import Coursel from './components/Coursel';
+import Login from './components/Login';
+import { useState } from 'react';
 
 var details = {
   username :"praveen Sokhal",
   projectname : "Rangeela"
 }
+
 function App() {
+
+var [login,setLogin] = useState();
+// setLogin = true;
+let myphone = ()=> {
+  // alert("d appjs myphone");
+  setLogin(true);
+}
   return (
     <div >
-     <Navbar details = {details} >Kids</Navbar>
+     <Navbar isloggedin = {login} details = {details} >Kids</Navbar>
     <Coursel></Coursel>
-
-    <Cake></Cake>
+    <Login callme = {myphone}> </Login>
+    <Cardlist></Cardlist>
       <Signup></Signup>
    
     </div>

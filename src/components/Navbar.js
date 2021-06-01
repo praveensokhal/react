@@ -1,4 +1,4 @@
-
+import {useState} from "react";
 
 
 let Navbar= (props)=>{
@@ -15,9 +15,26 @@ let Navbar= (props)=>{
       alert("please enter");
     }
   }
+
   let getserchText = (event)=>{
     searchstring = event.target.value;
   }
+  // var loggi = props.isloggedin;
+ 
+  var [isloggedin,setUser] = useState(localStorage.isloggedin);
+
+ let logout = ()=>{
+  // localStorage.clear();
+  // console.log("locl.........",localStorage.getItem);
+  setUser(false);
+ 
+  
+ }
+//  let login = ()=>{
+//   //  console.log("login.. ",props.isloggedin)
+//   setUser(true);
+// }
+
     return(
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container-fluid">
@@ -56,9 +73,14 @@ let Navbar= (props)=>{
             </form>
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <a className="nav-link active pull-right" aria-current="page" href="#">Logout {props.details.username}</a>
-              </li>
+                <a className="nav-link active pull-right" aria-current="page" href="#"> {props.details.username}</a>
+
+             </li>
               </ul>
+              {!props.isloggedin && <button className="search btn btn-outline-success"  type="button">Login</button>}
+
+             {props.isloggedin && <button className="search btn btn-outline-danger"  onClick={logout} type="button">Logout</button>}
+              
           </div>
         </div>
       </nav>

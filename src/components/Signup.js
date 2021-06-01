@@ -68,7 +68,7 @@ constructor(){
                 <input type="password" className="signup form-control" id="confirm-password" placeholder="confirm-password"/>
              </div>
              <div className="d-flex flex-row align-items-center justify-content-between">
-            <button className=" signup btn btn-primary" >Create Account</button>
+            <button className=" signup btn btn-primary"  >Create Account</button>
                     </div>
                  </form>
                </div>

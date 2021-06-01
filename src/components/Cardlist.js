@@ -3,17 +3,14 @@ import data from './data';
 import './component.css';
 
 import Card from './Card.js';
-let Cake = (props)=>{
+let Cardlist = (props)=>{
   
     return(
         <div className="list-container" >
         <div className="card-groups"  >
     {data.map((each,index)=>{   
-        return (  
-            
-           
+        return (    
                  <Card data={each} index ={index}></Card>
-                
          )
  
      })}
@@ -24,4 +21,4 @@ let Cake = (props)=>{
     )
    
 }
-export default Cake
+export default Cardlist
