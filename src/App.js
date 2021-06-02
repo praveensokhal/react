@@ -35,7 +35,7 @@ let myphone = ()=> {
       </div>
     </div>
      
-    {/* <Cardlist></Cardlist> */}
+    <Cardlist></Cardlist>
    
    
     </div>
