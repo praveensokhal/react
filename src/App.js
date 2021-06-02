@@ -8,7 +8,7 @@ import Login from './components/Login';
 import { useState } from 'react';
 
 var details = {
-  username :"praveen Sokhal",
+  username :"",
   projectname : "Rangeela"
 }
 
@@ -24,16 +24,18 @@ let myphone = ()=> {
     <div >
      <Navbar isloggedin = {login} details = {details} >Kids</Navbar>
     <Coursel></Coursel>
+    
+ 
     <div className="row pb-5 ">
       <div className="col-xl-6 ">
       <Signup></Signup>
       </div>
       <div className="col-xl-6 ">
-      <Login callme = {myphone}> </Login> 
+      <Login  callme = {myphone}> </Login> 
       </div>
     </div>
      
-    <Cardlist></Cardlist>
+    {/* <Cardlist></Cardlist> */}
    
    
     </div>

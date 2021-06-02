@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./component.css";
 import axios from "axios";
 
@@ -6,27 +6,58 @@ const apiurl="https://apibyashu.herokuapp.com/api/login"
 let  Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [messagedisplay, setMessageDisplay] = useState();
+  const [fetchData, setFetch] = useState(false);
 
   function validateForm() {
     return email.length > 0 && password.length > 0;
   }
 
-  function handleSubmit(event) {
+// useEffect(()=>{
+  
+//       axios({method:"POST",url:apiurl,data:{email:email,password:password}}).then((response)=>
+//         {
+//           if(response.data.message === "Invalid Credentials"){
+          
+//             setMessageDisplay(response.data.message)
+//           }else{
+//             setMessageDisplay("login successfully")
+//             props.callme();
+//           }
+//             console.log("response login ..",response.data);
 
-    axios({method:"POST",url:apiurl,data:{email:"praveen.sokhal@neosoftmail.com",password:"123456"}}).then((response)=>{
- 
-       alert("successful");
-       console.log("login",response.data);
-      
-       },(error)=>{});
+//             },(error)=>{
+              
+//               setMessageDisplay(error.data)
+              
+//               console.log("error login ...",error.data);
+//             });
+  
+
+//  },[]) 
+
     
-  }
+  
 
- var login = (e) =>{ 
+ var onSubmithandler = (e) =>{ 
       e.preventDefault();
-      handleSubmit();
-    //  alert("login pafe");
-    props.callme();
+      axios({method:"POST",url:apiurl,data:{email:email,password:password}}).then((response)=>{
+        if(response.data.message === "Invalid Credentials"){
+        
+          setMessageDisplay(response.data.message)
+        }else{
+          setMessageDisplay("login successfully")
+          props.callme();
+        }
+    console.log("response login ..",response.data);
+  
+     },(error)=>{
+      
+       setMessageDisplay(error.data)
+      
+      console.log("error login ...",error.data);
+     });
+   
   }
 
   return (
@@ -35,8 +66,9 @@ let  Login = (props) => {
       <div className="card">
         <h2 className="card-title text-center">Login</h2>
           <div className="card-body  ">
-    
-          <form className="login form" >
+   
+          <form className="login form" onSubmit ={onSubmithandler} >
+          <p style = {{"color":"red"}}>{messagedisplay}</p>
             <div className="login form-group" size="lg" controlId="email">
               <label>Email</label>
               <input className="login form-control" autoFocus type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter a EMAIL"/>
@@ -50,7 +82,7 @@ let  Login = (props) => {
               />
               {/* {props.detail} */}
             </div>
-            <button className=" signup btn btn-primary" size="lg" type="submit" onClick={login} disabled={!validateForm()}>
+            <button className=" signup btn btn-primary" size="lg" type="submit"   disabled={!validateForm()}>
               Login
             </button>
           </form>
