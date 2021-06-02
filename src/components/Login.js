@@ -44,7 +44,7 @@ let  Login = (props) => {
       axios({method:"POST",url:apiurl,data:{email:email,password:password}}).then((response)=>{
         if(response.data.message === "Invalid Credentials"){
         
-          setMessageDisplay(response.data.message)
+          setMessageDisplnpay(response.data.message)
         }else{
           setMessageDisplay("login successfully")
           props.callme();
