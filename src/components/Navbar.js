@@ -19,21 +19,12 @@ let Navbar= (props)=>{
   let getserchText = (event)=>{
     searchstring = event.target.value;
   }
-  // var loggi = props.isloggedin;
- 
+
   var [isloggedin,setUser] = useState(localStorage.isloggedin);
 
  let logout = ()=>{
-  // localStorage.clear();
-  // console.log("locl.........",localStorage.getItem);
   setUser(false);
- 
-  
  }
-//  let login = ()=>{
-//   //  console.log("login.. ",props.isloggedin)
-//   setUser(true);
-// }
 
     return(
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
