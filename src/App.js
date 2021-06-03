@@ -6,7 +6,9 @@ import Cardlist from './components/Cardlist';
 import Coursel from './components/Coursel';
 import Login from './components/Login';
 import { useState } from 'react';
-
+import { BrowserRouter as Router ,Route, Switch} from "react-router-dom";
+import Pagenotfound from './components/Pagenotfound';
+import Home from "./components/Home"
 var details = {
   username :"",
   projectname : "Rangeela"
@@ -22,7 +24,23 @@ let myphone = ()=> {
 }
   return (
     <div >
+      <Router>
+
      <Navbar isloggedin = {login} details = {details} >Kids</Navbar>
+        <Switch>
+          <Route exact path="/" component={Home}><Home></Home> </Route>
+
+          <Route exact path="/login" component={ Login }></Route>
+
+          <Route exact path="/signup" component={ Signup }>  <Signup/> </Route>
+          <Route exact path="/*" component={Pagenotfound}> </Route>
+          </Switch>
+      </Router>
+
+      
+      
+      {/* <Pagenotfound exact path="/*"> </Pagenotfound> */}
+     {/* <Navbar isloggedin = {login} details = {details} >Kids</Navbar>
     <Coursel></Coursel>
     
     <div className="row pb-5 ">
@@ -34,7 +52,7 @@ let myphone = ()=> {
       </div>
     </div>
      
-    <Cardlist></Cardlist>
+    <Cardlist></Cardlist> */}
    
    
     </div>

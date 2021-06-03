@@ -9,25 +9,36 @@ import { useEffect, useState } from 'react';
 var apiurl = "https://fakestoreapi.com/products";
 
 let Cardlist = (props)=>{
+
+    var [islodding,setLodding]=useState(true)
     var [data,setData]=useState([]);
 useEffect(()=>{
     axios({method:"GET",url:apiurl,data:JSON}).then((response)=>{
         setData(response.data)
-      
-      },(error)=>{});
+      setLodding(false)
+      },(error)=>{
+          console.log("error..",error.data)
+          setLodding(false)
+      });
     
 }
 
 )
     return(
    
-        <div className="list-container" >
-        <div className="card-groups"  >
+        <div className="container" >
+        <div className="card-groups "  >
      
-    {data.map((each,index)=>{   
-        return ( <Card data={each} index ={index}></Card>)
- 
-     })}
+            {data.map((each,index)=>{   
+                return ( 
+                <Card data={each} index ={index}></Card>
+                
+                )
+        
+            })}
+            {
+                islodding ?? <div>islods</div>
+            }
   
       </div>
     

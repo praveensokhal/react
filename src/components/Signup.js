@@ -89,12 +89,12 @@ constructor(){
      render(){
          return(
             <div className="container signup ">
-              <div className="row justify-content-center">
-                <div className="col-md-5">
-                  <div className="card">
+              <div className="row ">
+                <div className="col-md-6">
+                  <div className="card signup">
                   <h2 className="card-title text-center">Register</h2>
                     <div className="card-body  ">
-                      <p style={{"color":"red"}} >{this.state.messgaedisplay}</p>
+                      <p  style={{"color":"red"}} >{this.state.messgaedisplay}</p>
                     <form autocomplete="off"  onSubmit={this.formsubmit.bind(this)} >
                         <div className="form-group">
                           <input type="text" className="signup form-control" id="name" onChange={this.setName.bind(this)} value={this.state.name}  placeholder="Name"/>
