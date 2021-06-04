@@ -33,7 +33,7 @@ let Navbar= (props)=>{
  let logout = ()=>{
   localStorage.clear();
   setLogin(false);
-  props.history.push("/")
+  props.history.push("/login")
  }
 
     return(

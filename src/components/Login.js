@@ -18,9 +18,9 @@ let  Login = (props) => {
  var onSubmithandler = (e) =>{ 
       e.preventDefault();
       axios({method:"POST",url:apiurl,data:{email:email,password:password}}).then((response)=>{
-        console.log("loginnnnnprops",props)
+     
         if(response.data.message === "Invalid Credentials"){
-        console.log("loginnnnnprops",props)
+
           setMessageDisplay(response.data.message)
         }else{
           setMessageDisplay("login successfully")
@@ -32,13 +32,11 @@ let  Login = (props) => {
           // props.callme();
          
         }
-    console.log("response login ..",response.data);
+    
   
      },(error)=>{
-      
        setMessageDisplay(error.data)
       
-      console.log("error login ...",error.data);
      });
    
   }
