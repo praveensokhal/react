@@ -24,14 +24,12 @@ let  Login = (props) => {
           setMessageDisplay(response.data.message)
         }else{
           setMessageDisplay("login successfully")
+          localStorage.setItem('name',response.data.name);
+          localStorage.setItem('loggedin',true);
+          props.history.push("/")
+       
+          // props.history.push({pathname:"/",state:{name:response.data.name}})
           // props.callme();
-          props.history.push({
-            pathname: '/',
-            // search: '?query=abc',
-            state: { details : "r"
-              
-            }
-          })
          
         }
     console.log("response login ..",response.data);

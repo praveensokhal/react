@@ -10,6 +10,42 @@
     width: 100% !important;
 }
 
+  p.loader-text{
+    margin-top: 0;
+    font-size: 26px;
+    margin-bottom: 1rem;
+    position: absolute;
+    padding: 134px 590px;
+}
+.carddetails{
+  height:435px;
+  width:498px;
+  border:1px solid rgb(48, 46, 46);
+  box-shadow: black;
+}
+
+.loader4 {
+  width:300px;
+  height:300px;
+  display:inline-block;
+  padding:0px;
+  border-radius:100%;
+  border:16px solid;
+  border-top-color:rgba(246, 36, 89, 1);
+  border-bottom-color:rgba(255,255,255, 0.3);
+  border-left-color:rgba(246, 36, 89, 1);
+  border-right-color:rgba(255,255,255, 0.3);
+  -webkit-animation: loader4 1s ease-in-out infinite;
+  animation: loader4 1s ease-in-out infinite;
+}
+@keyframes loader4 {
+  from {transform: rotate(0deg);}
+  to {transform: rotate(360deg);}
+}
+@-webkit-keyframes loader4 {
+  from {-webkit-transform: rotate(0deg);}
+  to {-webkit-transform: rotate(360deg);}
+}
 
 h2{
   padding-top: 1.5rem;
