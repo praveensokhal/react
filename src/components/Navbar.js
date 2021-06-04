@@ -1,23 +1,21 @@
 import {useState} from "react";
 import {Link, Router, withRouter} from "react-router-dom";
 
-import axios from "axios";
+// import axios from "axios";
 
 const apiurl="https://apibyashu.herokuapp.com/api/logout"
 let Navbar= (props)=>{
   console.log("local",localStorage)
-  let searchstring
-  let searchem =""
+  let searchstring=""
   let  search = (event)=>{
     event.preventDefault()
+    
     if(searchstring != null){
-      searchem = searchstring;
       // alert(searchstring);
       if(searchstring !==""){
         var url = "/search?q="+searchstring
         props.history.push(url)
       }
-      console.log("...",searchem)
     }
     else{
       alert("please enter");
@@ -55,7 +53,7 @@ let Navbar= (props)=>{
           <div className="collapse navbar-collapse align-items-end" id="navbarSupportedContent">
               
               <form className="d-flex align-items-end">
-                <input className="form-control me-2" onChange = {getserchText} type="search" placeholder="Search" aria-label="Search"/>
+                <input className="form-control me-2" onChange = {getserchText} type="search"  placeholder="Search" aria-label="Search"/>
               
                 <button className="search btn btn-outline-success" onClick={search} type="submit">Search</button>
               </form>
@@ -80,8 +78,12 @@ let Navbar= (props)=>{
           </div>
         
         </div>
+      
       </nav>
+    
     )
 }
+
+
 Navbar = withRouter(Navbar)
 export default Navbar;

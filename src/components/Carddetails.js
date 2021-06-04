@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 function Carddetails(props){
 var params = useParams(props)
 
-var apiurl=`http://apibyashu.herokuapp.com/api/cake/ ${params.cakeid}`
+var apiurl=`https://apibyashu.herokuapp.com/api/cake/${params.cakeid}`
 var cakeid = params.cakeid
 var [data,setData]=useState([]);
 var [islodding,setLodding]=useState(true)
@@ -32,7 +32,7 @@ var [islodding,setLodding]=useState(true)
                         <div class="loader4">
                         </div>
                     </div>}
-{!islodding && <div className="container">
+{!islodding && <div className="container ">
     <div className=" row card m-5">
             <div className="card-block">
                 <div className="row">
