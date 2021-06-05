@@ -5,7 +5,7 @@ import axios from "axios";
 
 import Card from './Card.js';
 import { useEffect, useState } from 'react';
-var apiurl = "https://apibyashu.herokuapp.com/api/allcakes";
+var apiurl = process.env.REACT_APP_BASE_API_URL+"/allcakes";
 // var apiurl = "https://fakestoreapi.com/products";
 
 let Cardlist = (props)=>{

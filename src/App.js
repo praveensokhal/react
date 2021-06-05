@@ -9,6 +9,7 @@ import Pagenotfound from './components/Pagenotfound';
 import Home from "./components/Home"
 import Search from './components/Search';
 import Carddetails from './components/Carddetails';
+import Checkout from './components/Checkout';
 
 var details = {
   username :"",
@@ -22,7 +23,7 @@ function App() {
     // alert("d appjs myphone");
     setLogin(true);
   }
-
+console.log("apii env",process.env)
   return (
     <div >
       <Router>
@@ -35,29 +36,12 @@ function App() {
           <Route exact path="/login" component={ (props)=><Login {...props} callme={myphone}/>}></Route>
           <Route exact path ="/search" component ={Search}></Route>
           <Route exact path = "/cake/:cakeid" component = {Carddetails}></Route>
+
+          <Route  exact path="/checkout" component={Checkout} >  </Route>
           <Route exact path="/signup" component={ Signup }>  <Signup/> </Route>
-          <Route exact path="/*" component={Pagenotfound}> </Route>
+          <Route exact path="/*" component={Pagenotfound}> <Pagenotfound></Pagenotfound> </Route>
           </Switch>
       </Router>
-
-      
-      
-      {/* <Pagenotfound exact path="/*"> </Pagenotfound> */}
-     {/* <Navbar isloggedin = {login} details = {details} >Kids</Navbar>
-    <Coursel></Coursel>
-    
-    <div className="row pb-5 ">
-      <div className="col-xl-6 ">
-      <Signup></Signup>
-      </div>
-      <div className="col-xl-6 ">
-      <Login  callme = {myphone}> </Login> 
-      </div>
-    </div>
-     
-    <Cardlist></Cardlist> */}
-   
-   
     </div>
   );
 }

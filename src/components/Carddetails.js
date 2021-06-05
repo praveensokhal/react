@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 function Carddetails(props){
 var params = useParams(props)
 
-var apiurl=`https://apibyashu.herokuapp.com/api/cake/${params.cakeid}`
+var apiurl=process.env.REACT_APP_BASE_API_URL+"/cake/"+params.cakeid
 var cakeid = params.cakeid
 var [data,setData]=useState([]);
 var [islodding,setLodding]=useState(true)
@@ -42,6 +42,10 @@ var [islodding,setLodding]=useState(true)
                     
                     </div>
                     <div className="col">
+                    <div class="container">
+                    <span id="rateMe4"  class="feedback">{data.rating}dddddddddddddd</span>
+                    </div>
+                    <script src="js/addons/rating.js"></script>
                     <p className="card-text">{data.name}</p>
                     <p className="text " style = {{"color":"red"}}> Rs {data.price}</p>
                     <p className="card-text">{data.description}</p>
@@ -55,4 +59,5 @@ var [islodding,setLodding]=useState(true)
 
     )
 }
+
 export default Carddetails

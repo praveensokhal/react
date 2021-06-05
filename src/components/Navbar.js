@@ -3,7 +3,6 @@ import {Link, Router, withRouter} from "react-router-dom";
 
 // import axios from "axios";
 
-const apiurl="https://apibyashu.herokuapp.com/api/logout"
 let Navbar= (props)=>{
   console.log("local",localStorage)
   let searchstring=""

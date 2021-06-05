@@ -1,3 +1,5 @@
+import { withRouter } from "react-router"
+
 function  Pagenotfound(){
     return (
         <>
@@ -6,4 +8,5 @@ function  Pagenotfound(){
         </>
     )
 }
+Pagenotfound = withRouter(Pagenotfound)
 export default Pagenotfound
