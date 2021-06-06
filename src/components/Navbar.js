@@ -4,32 +4,23 @@ import {Link, Router, withRouter} from "react-router-dom";
 // import axios from "axios";
 
 let Navbar= (props)=>{
-  console.log("local",localStorage)
+ 
   let searchstring=""
   let  search = (event)=>{
     event.preventDefault()
     
-    if(searchstring != null){
-      // alert(searchstring);
-      if(searchstring !==""){
+    if(searchstring != null && searchstring !==""){
         var url = "/search?q="+searchstring
         props.history.push(url)
-      }
-    }
-    else{
-      alert("please enter");
     }
   }
 
   let getserchText = (event)=>{
     searchstring = event.target.value;
   }
-  var isloggedin=  props.isloggedin
-  var [isloggedin,setLogin] = useState(props.isloggedin);
-  // isloggedin=  props.isloggedin
+ 
  let logout = ()=>{
   localStorage.clear();
-  setLogin(false);
   props.history.push("/login")
  }
 
@@ -65,11 +56,11 @@ let Navbar= (props)=>{
                 {/* {!props.isloggedin && <Link to="/signup">
                   <button className="search btn btn-outline-success"  type="button">Singup</button>
                 </Link> } */}
-                {!localStorage.loggedin && <Link to="/login">
+                {!localStorage.token && <Link to="/login">
                   <button className="search btn btn-primary"  type="button">Login</button>
                 </Link>}
 
-                {localStorage.loggedin && 
+                {localStorage.token && 
                   <button className="search btn btn-danger" onClick={logout} type="button">Logout</button>
                  }
                 

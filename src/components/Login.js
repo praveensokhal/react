@@ -23,14 +23,12 @@ let  Login = (props) => {
 
           setMessageDisplay(response.data.message)
         }else{
+          console.log(response.data)
           setMessageDisplay("login successfully")
           localStorage.setItem('name',response.data.name);
           localStorage.setItem('loggedin',true);
+          localStorage.setItem('token',response.data.token)
           props.history.push("/")
-       
-          // props.history.push({pathname:"/",state:{name:response.data.name}})
-          // props.callme();
-         
         }
     
   

@@ -31,15 +31,15 @@ console.log("apii env",process.env)
       <Navbar isloggedin = {login} details = {details} >Kids</Navbar>
        
         <Switch>
-          <Route exact path="/" component={Home}><Home></Home> </Route>
+          <Route exact path="/" component={Home}></Route>
 
           <Route exact path="/login" component={ (props)=><Login {...props} callme={myphone}/>}></Route>
           <Route exact path ="/search" component ={Search}></Route>
           <Route exact path = "/cake/:cakeid" component = {Carddetails}></Route>
 
-          <Route  exact path="/checkout" component={Checkout} >  </Route>
-          <Route exact path="/signup" component={ Signup }>  <Signup/> </Route>
-          <Route exact path="/*" component={Pagenotfound}> <Pagenotfound></Pagenotfound> </Route>
+          <Route  path="/checkout" component= {Checkout}></Route>
+          <Route exact path="/signup" component={ Signup }></Route>
+          <Route exact path="/*" component={Pagenotfound}></Route>
           </Switch>
       </Router>
     </div>
