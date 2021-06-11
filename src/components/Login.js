@@ -1,8 +1,9 @@
 import React, { Children, useEffect, useState } from "react";
 import "./component.css";
-import axios from "axios";
-import { Link } from "react-router-dom";
-
+import { Link, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import AuthReducer from "../reduxstore/AuthReducer";
+import {loginmiddleware} from "../reduxstore/middlewares"
 const apiurl="https://apibyashu.herokuapp.com/api/login"
 let  Login = (props) => {
   const [email, setEmail] = useState("");
@@ -17,25 +18,9 @@ let  Login = (props) => {
 
  var onSubmithandler = (e) =>{ 
       e.preventDefault();
-      axios({method:"POST",url:apiurl,data:{email:email,password:password}}).then((response)=>{
-     
-        if(response.data.message === "Invalid Credentials"){
-
-          setMessageDisplay(response.data.message)
-        }else{
-          console.log(response.data)
-          setMessageDisplay("login successfully")
-          localStorage.setItem('name',response.data.name);
-          localStorage.setItem('loggedin',true);
-          localStorage.setItem('token',response.data.token)
-          props.history.push("/")
-        }
-    
-  
-     },(error)=>{
-       setMessageDisplay(error.data)
-      
-     });
+      var data= {email:email,password:password}
+      // console.log("dataaaa", this.login)
+    props.dispatch(loginmiddleware(data))
    
   }
 
@@ -76,4 +61,17 @@ let  Login = (props) => {
     </div>
   );
 }
-export default Login
+Login =connect(function(state,props){
+	alert("props" + JSON.stringify(props))
+  if(state.AuthReducer?.isloggedin==true){
+      props.history.push("/")
+  }else{
+	  return {
+		  isloading:state.AuthReducer?.isloading
+	  }
+  }
+})(Login) 
+// i passed login to withRouter it return me Login with some addional things
+// then i exported modified Login
+export default withRouter(Login)
+//connect add  a props in login 

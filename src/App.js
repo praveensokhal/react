@@ -10,6 +10,8 @@ import Home from "./components/Home"
 import Search from './components/Search';
 import Carddetails from './components/Carddetails';
 import Checkout from './components/Checkout';
+import './components/component.css'
+import Footer from './components/Footer';
 
 var details = {
   username :"",
@@ -29,18 +31,22 @@ console.log("apii env",process.env)
       <Router>
 
       <Navbar isloggedin = {login} details = {details} >Kids</Navbar>
-       
-        <Switch>
-          <Route exact path="/" component={Home}></Route>
+          <div className="full-container bg-light main-layout" style={{"backgroundColor":"#666"}}>
+              <Switch>
+             
+                <Route exact path="/" component={Home}></Route>
 
-          <Route exact path="/login" component={ (props)=><Login {...props} callme={myphone}/>}></Route>
-          <Route exact path ="/search" component ={Search}></Route>
-          <Route exact path = "/cake/:cakeid" component = {Carddetails}></Route>
+                <Route exact path="/login" component={ (props)=><Login {...props} callme={myphone}/>}></Route>
+                <Route exact path ="/search" component ={Search}></Route>
+                <Route exact path = "/cake/:cakeid" component = {Carddetails}></Route>
 
-          <Route  path="/checkout" component= {Checkout}></Route>
-          <Route exact path="/signup" component={ Signup }></Route>
-          <Route exact path="/*" component={Pagenotfound}></Route>
-          </Switch>
+                <Route  path="/checkout" component= {Checkout}></Route>
+                <Route exact path="/signup" component={ Signup }></Route>
+                <Route exact path="/*" component={Pagenotfound}></Route>
+          
+              </Switch>
+          </div>
+        <Footer></Footer>
       </Router>
     </div>
   );

@@ -12,9 +12,12 @@ let Cardlist = (props)=>{
 
     var [islodding,setLodding]=useState(true)
     var [data,setData]=useState([]);
+   
 useEffect(()=>{
     axios({method:"GET",url:apiurl,data:JSON}).then((response)=>{
         console.log("propcale..",response.data.data)
+        // pageCount = Math.ceil(data.total_count / data.limit)
+      
         setLodding(false)
         setData(response.data.data)
   
@@ -34,14 +37,16 @@ useEffect(()=>{
                         </div>
                     </div>}
             { data.map((each,index)=>{   
-                return ( 
+                return ( <>
                 <Card data={each} index ={index}></Card>
-                
+              
+              </>
                 )
         
             })}
            
-  
+       
+    
       </div>
     
       </div>

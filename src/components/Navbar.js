@@ -1,12 +1,15 @@
 import {useState} from "react";
 import {Link, Router, withRouter} from "react-router-dom";
 
+import { connect } from "react-redux";
 // import axios from "axios";
 
 let Navbar= (props)=>{
  
   let searchstring=""
+  console.log("login",props)
   let  search = (event)=>{
+   
     event.preventDefault()
     
     if(searchstring != null && searchstring !==""){
@@ -20,6 +23,14 @@ let Navbar= (props)=>{
   }
  
  let logout = ()=>{
+
+  console.log("login",props)
+  props.dispatch({
+    type:"LOGIN",
+    payload:{
+      token:undefined
+    }
+  })
   localStorage.clear();
   props.history.push("/login")
  }
@@ -53,9 +64,10 @@ let Navbar= (props)=>{
 
                 </li>
                 </ul>
-                {/* {!props.isloggedin && <Link to="/signup">
-                  <button className="search btn btn-outline-success"  type="button">Singup</button>
-                </Link> } */}
+                {localStorage.token && <Link to="/checkout">
+                <button className="search btn btn-primary " style={{"marginRight":"13px"}}><i class="fa fa-shopping-cart pl-0"></i></button>
+                </Link> }
+                
                 {!localStorage.token && <Link to="/login">
                   <button className="search btn btn-primary"  type="button">Login</button>
                 </Link>}
@@ -76,4 +88,4 @@ let Navbar= (props)=>{
 
 
 Navbar = withRouter(Navbar)
-export default Navbar;
+export default connect()(Navbar); 

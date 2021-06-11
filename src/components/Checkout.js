@@ -25,8 +25,8 @@ function Checkout(){
                 </ul>
            </nav>
            
-            <div class="container col-md-8 checkout   ">
-                <div class="row justify-content-center card ">
+            <div class="container col-md-8 checkout   m-5 mb-5">
+                <div class="row justify-content-center  ">
                 <Route exact path={path}><Redirect to={path+"/summary"}></Redirect></Route>
                    <Route exact path={path+"/order"} component={Order}></Route>
                    <Route exact path={path+"/summary"}component={Summary}></Route>

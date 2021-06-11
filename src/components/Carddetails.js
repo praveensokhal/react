@@ -1,17 +1,20 @@
 
 import {Link, Router, useParams, withRouter} from "react-router-dom";
 import "./component.css";
-
+import StarRatings from 'react-star-ratings';
 import axios from "axios";
 import { useEffect, useState } from 'react';
-import Card from "./Card";
+import { connect } from "react-redux";
+
 
 
 function Carddetails(props){
 var params = useParams(props)
 
+var apiurl_cart=process.env.REACT_APP_BASE_API_URL+"/addcaketocart/"
 
-
+console.log("proppp...........",props)
+// /addcaketocart - { header:authtoken data:cakeid,name,image,price,weight } 
 var apiurl=process.env.REACT_APP_BASE_API_URL+"/cake/"+params.cakeid
 var [data,setData]=useState([]);
 var [islodding,setLodding]=useState(true)
@@ -29,7 +32,31 @@ var [similarCake , setSimilarCakes]=useState()
     
 },islodding)
 
+var addtocart= (e)=>{
+    axios({method:"POST",url:apiurl_cart,
+    headers:{
+        authtoken:localStorage.token
 
+    },data:{
+        cakeid:data.cakeid,
+        name: data.name,
+        image : data.image,
+        price : data.price,
+        weight : data.weight
+    }}).then((response)=>{
+        // console.log("token",localStorage.token)
+        // console.log("response api cart",response.data)
+        props.dispatch({
+            type:"ADDTOCART",
+            payload:data
+        })
+        
+    },(error)=>{
+
+        console.log("error..",error)
+        // setLodding(false)
+    });
+}
 
 
     return(
@@ -43,7 +70,6 @@ var [similarCake , setSimilarCakes]=useState()
                     </div>}
 {!islodding &&
  <div className=" mt-5 card row mb-5 p-4 ">
-    
             <div className="card-block">
                 <div className="row">
                     <div className="col card-detail-image-block ">
@@ -60,7 +86,7 @@ var [similarCake , setSimilarCakes]=useState()
                            </div>
                       
                         <div className="action m-5">
-							<button className="add-to-cart btn btn-default" type="button">add to cart</button>
+							<button className="add-to-cart btn btn-default" onClick={addtocart} type="button">add to cart</button>
 							<button className="like btn btn-default" type="button"><span className="fa fa-heart">{data.likes}</span></button>
 						</div>
                    
@@ -70,9 +96,16 @@ var [similarCake , setSimilarCakes]=useState()
                         <h3 className="product-title">{data.name}</h3>
                         <small className="mb-2">by {data.owner.name} </small>
 						<div className="rating">
-                            Ratings
-							<span className="review-no">{data.reviews} rewies</span>
+                        <strong> Ratings : <StarRatings  rating={data.ratings}
+                                                        starRatedColor="yellow"
+                                                        numberOfStars={5}
+                                                        name='rating'
+                                                        starDimension="25px"
+                                                        starSpacing="5px"
+                                                        ></StarRatings></strong>
+							
 						</div>
+                        <div className="review-no"><small>{data.reviews} <strong>reviews</strong></small></div>
                         {
                             data.description && 
                             <>
@@ -82,13 +115,14 @@ var [similarCake , setSimilarCakes]=useState()
                         }
                        
 						<h4 className="price">current price: <span>Rs {data.price}</span></h4>
-						<hr></hr>
+						
                          </div>
-                        
-                      
+                       
+                         
                       {
-                            data.ingredients &&
+                            data.ingredients[0] &&
                             <>
+                            <hr></hr>
                              <strong className="title">INGREDIENTS :</strong>
                           <div className = "ingriedent col-md-6">
                           <ul className="pl-3 .list-container">
@@ -127,4 +161,4 @@ var [similarCake , setSimilarCakes]=useState()
     )
 }
 
-export default Carddetails
+export default connect()(Carddetails) 

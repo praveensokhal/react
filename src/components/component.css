@@ -4,6 +4,21 @@
 .navbar{
   height: 70px;
 }
+.main-layout{
+  margin: 50px;
+}
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  /* top:5px; */
+  margin-top: 500px;
+  width: 100%;
+  background-color: rgb(48, 45, 45);
+  color: white;
+  text-align: center;
+}
+
 .shopping-cart {
   height: 493px;
   background: #FFFFFF;
@@ -72,7 +87,8 @@ Let’s add some basic style to  product name and description. */
     width: 100% !important;
 }
 .checkout .card{
-  height: 500px;
+  height: auto;
+  /* margin: 55px; */
 }
 .sidenav {
 
