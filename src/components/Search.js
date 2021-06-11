@@ -22,7 +22,7 @@ var apiurl = process.env.REACT_APP_BASE_API_URL+"/searchcakes?q="+query.q
         setLodding(false)
     });
 
-    },islodding)
+    })
     return(
       
         <>

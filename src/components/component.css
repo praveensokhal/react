@@ -87,6 +87,7 @@ Let’s add some basic style to  product name and description. */
     width: 100% !important;
 }
 .checkout .card{
+<<<<<<< Updated upstream
   height: auto;
   /* margin: 55px; */
 }
@@ -130,6 +131,50 @@ nav ul{
 }
 
 
+=======
+  height: 500px;
+}
+.sidenav {
+
+  width: 300px; /* Set the width of the sidebar */
+  position: absolute; /* Fixed Sidebar (stay in place on scroll) */
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+  left: 0;
+  /* background-color: #111; Black */
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 20px;
+  margin: 116px 35px;
+}
+
+/* The navigation menu links */
+.sidenav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  
+  padding-bottom: 20px;
+}
+nav ul{
+  list-style-type: none;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav button{
+  border-radius: 10px;
+  width: 250px;
+  
+  display: block;
+}
+
+
+>>>>>>> Stashed changes
 /* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
