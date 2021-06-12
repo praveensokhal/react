@@ -5,6 +5,7 @@ import StarRatings from 'react-star-ratings';
 import axios from "axios";
 import { useEffect, useState } from 'react';
 import { connect } from "react-redux";
+import { CartListMiddleware , AddProcutToCartListMiddleware } from "../reduxstore/middlewares";
 
 
 
@@ -33,29 +34,9 @@ var [similarCake , setSimilarCakes]=useState()
 },islodding)
 
 var addtocart= (e)=>{
-    axios({method:"POST",url:apiurl_cart,
-    headers:{
-        authtoken:localStorage.token
-
-    },data:{
-        cakeid:data.cakeid,
-        name: data.name,
-        image : data.image,
-        price : data.price,
-        weight : data.weight
-    }}).then((response)=>{
-        // console.log("token",localStorage.token)
-        // console.log("response api cart",response.data)
-        props.dispatch({
-            type:"ADDTOCART",
-            payload:data
-        })
-        
-    },(error)=>{
-
-        console.log("error..",error)
-        // setLodding(false)
-    });
+  
+    let  apiurl =process.env.REACT_APP_BASE_API_URL+"/addcaketocart";
+      props.dispatch(AddProcutToCartListMiddleware(data,apiurl)); 
 }
 
 

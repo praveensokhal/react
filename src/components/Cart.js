@@ -1,8 +1,10 @@
 
 import axios from "axios";
-import {Link} from "react-router-dom"
+import {Link, withRouter} from "react-router-dom"
 import { useEffect, useState } from 'react';
 import $ from 'jquery'
+import { connect } from "react-redux";
+import { CartListMiddleware,cartReducer,RemoveProductFromCartListMiddleware, AddProcutToCartListMiddleware } from "../reduxstore/middlewares";
 
 function Cart(props){
     
@@ -11,36 +13,44 @@ function Cart(props){
 
   
   useEffect(()=>{
-    axios({method:"POST",url:process.env.REACT_APP_BASE_API_URL+"/cakecart",headers:{authtoken:localStorage.token},data:{JSON}}).then((response)=>{
-     
-    
-      console.log("tanu 1",response.data.data)
-      setData(response.data.data)
-    
-      setLodding(false)
-   
-
- },(error)=>{
-  
-  
- });
+    // cartReducer
+    axios(
+      {
+          method:"POST",
+          url:process.env.REACT_APP_BASE_API_URL+"/cakecart",
+          headers:{
+             authtoken:localStorage.token
+          },
+          data:{
+                JSON
+          }})
+              .then(res => {
+                const cartlist = res.data.data
+                setData(cartlist);
+                
+                 
+                  props.dispatch({
+                      type:'ADDTOCART',
+                      payload:{
+                        data:cartlist,
+                        
+                      }
+                      
+                  });
+                  setLodding(false)
+              },(error)=>{
+                console.log(error.data)
+                });
 
   },islodding)
   
-  var decreaseCakeItem=(e)=>{
-
-    axios({method:"POST",url:process.env.REACT_APP_BASE_API_URL+"/removeonecakefromcart",headers:{authtoken:localStorage.token},data:{cakeid:e.target.value}}).then((response)=>{
-       console.log("response remove one",response.data)
-       props.history.push("/checkout/summary")
- },(error)=>{
-
-  
- });
-
-  };
+  var decreaseCakeItem=(e,cakedata)=>{
+    let  apiurl =process.env.REACT_APP_BASE_API_URL+"/removeonecakefromcart";
+    props.dispatch(RemoveProductFromCartListMiddleware(cakedata,apiurl)); 
+    };
   var Removecart=(e,cakeid)=>{
 
-    axios({method:"POST",url:process.env.REACT_APP_BASE_API_URL+"/removecakefromcart",headers:{authtoken:localStorage.token},data:{cakeid:cakeid}}).then((response)=>{
+    axios({method:"POST",url:process.env.REACT_APP_BASE_API_URL+"/clearcart",headers:{authtoken:localStorage.token},data:{cakeid:cakeid}}).then((response)=>{
        console.log("response remove cart",response.data)
       
  },(error)=>{
@@ -53,33 +63,15 @@ function Cart(props){
 
    
       let  apiurl =process.env.REACT_APP_BASE_API_URL+"/addcaketocart";
- 
-      axios({
-      method:"post",
-      url:apiurl,
-      headers:{
-         authtoken:localStorage.token
-      },
-      data:{
-         cakeid:cakedata.cakeid,
-         name:cakedata.name,
-         image:cakedata.image,
-         price:cakedata.price,
-         weight:cakedata.weight
-      }}).then((res)=>{
-
-          
-      console.log("added item",res.data)
-        
-    } ,(error)=>{
-           // console.log(error)
-    })
+      props.dispatch(AddProcutToCartListMiddleware(cakedata,apiurl)); 
+    
   
   };
   var changeTab=()=>{
     props.click();
    
 }
+
 return (
     <>
 
@@ -90,7 +82,7 @@ return (
         <h1> Your Cart</h1>
     
       </div> }
-{data && data.length>0? 
+{props.cart && props.cart.length>0? 
     <div className="checkout">
     <div  className="shopping-cart card">
       <div className="title">
@@ -104,13 +96,13 @@ return (
             <th  className="text-center">qty</th>
             <th  className="text-center">price</th>
             <th className="text-center">total</th>
-            <th  className="text-center">clear</th>
+            <th  className="text-center">delete</th>
            
           </thead>
           
 
 <tbody>
-{data.map((value,index)=>{
+{props.cart.map((value,index)=>{
         
         return (
           <tr>
@@ -133,7 +125,7 @@ return (
             <td className="text-center" style={{width:'140px'}}>
               
                 <span>
-                  <button className="  fa fa-minus" type="button" name="button" style={{marginRight:'14px'}} value={value.cakeid} onClick={decreaseCakeItem}> </button>
+                  <button className="  fa fa-minus" type="button" name="button" style={{marginRight:'14px'}} value={value.cakeid} onClick={(e)=>{decreaseCakeItem(e,value)}}> </button>
                     <input type="text" disabled name="name" value={value.quantity}/>
                     <button className="  fa fa-plus" type="button" name="button"   style={{marginLeft:'14px'}}value={value.cakeid} onClick={(e)=>{addCakeItem(e,value)}}>
           
@@ -144,7 +136,7 @@ return (
             <td className="text-center"> ₹ {Math.round((value.price / value.quantity),2)}</td>
 
             <td className="total-price text-center" value={value.price} >₹<strong className="price">{value.price}</strong></td>
-            <td class="text-center"><a class="remove-from-cart" href="#" onClick={(e)=>Removecart(e,value.cakeid)} data-toggle="tooltip" title="" data-original-title="Remove item"><i class="fa fa-trash"></i></a></td>  
+            <td class="text-center"><a class="remove-from-cart"  onClick={(e)=>Removecart(e,value.cakeid)} data-toggle="tooltip" title="" data-original-title="Remove item"><i class="fa fa-trash"></i></a></td>  
           </tr>
         )
         })}
@@ -155,18 +147,16 @@ return (
         </table>
 
         <div className="shopping-cart-footer ">
-  
-
-    <h3 className="pull-right">
-    Total :   
-    <strong> ₹
-    <span id="total">
-    {getTotal()}
-    </span>
-    </strong>
-    </h3>
-    </div>
-    </div>
+        <h3 className="pull-right">
+        Total :   
+          <strong> ₹
+            <span id="total">
+            {props.total}
+            </span>
+          </strong>
+        </h3>
+        </div>
+      </div>
     {props.show==false?
 <div className="jumbotron mt-3 bg-dark mb-5">
         <Link to="/checkout/order"><button className = "btn btn-primary pull-right" onClick={changeTab}> Confirm</button></Link>
@@ -178,7 +168,7 @@ return (
 
     </div>
     :<center><img src="/asset/cart-empty.png" style={{width:'500px'}} />
-    <p>Your Cart is Empty. <Link to="/"><strong>Click here </strong></Link>to see Cakes</p>
+    <p>Cart is Empty. <Link to="/"><strong>Click here </strong></Link>to see Cakes</p>
     </center>
 }
 
@@ -197,4 +187,17 @@ function getTotal(){
 
 
 }
-export default Cart
+
+
+Cart= connect(function mapStateToProps(state,props){
+ 
+  console.log("props cart" + JSON.stringify(state.cartReducer))
+  return{
+    // cartReducer
+    cart:state.cartReducer,
+    isLoading:state.cartReducer?.isLoading,
+    token:state.AuthReducer?.token,
+    total:state.cartReducer?.totalprice,
+  }
+})(Cart)
+export default withRouter(Cart)

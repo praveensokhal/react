@@ -63,15 +63,15 @@ let Navbar= (props)=>{
 
                 </li>
                 </ul>
-                {localStorage.token && <Link to="/cart">
+                {props.token && <Link to="/cart">
                 <button className="search btn btn-primary " style={{"marginRight":"13px"}}><i class="fa fa-shopping-cart pl-0"></i></button>
                 </Link> }
                 
-                {!localStorage.token && <Link to="/login">
+                {!props.token && <Link to="/login">
                   <button className="search btn btn-primary"  type="button">Login</button>
                 </Link>}
 
-                {localStorage.token && 
+                {props.token && 
                   <button className="search btn btn-danger" onClick={logout} type="button">Logout</button>
                  }
                 
@@ -88,14 +88,11 @@ let Navbar= (props)=>{
 
 // Navbar = withRouter(Navbar)
 Navbar =connect(function(state,props){
-
-  if(state.AuthReducer?.message==true){
-     this.setMessageDisplay(state.AuthReducer?.message)
-     alert("props navbar" + JSON.stringify(state.AuthReducer))
-  }else{
+  // console.log("props navbar" + JSON.stringify(state.AuthReducer))
 	  return {
+      token:state.AuthReducer?.token,
 		  isloading:state.AuthReducer?.isloading
 	  }
-  }
+  
 })(Navbar) 
 export default  withRouter(Navbar); 

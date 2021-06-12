@@ -22,7 +22,7 @@ export function loginmiddleware(data){
                 type:"LOGIN",
                 payload:{
                   token:response.data.token,
-                  message:"LOGIN SUCCESSFULl"
+                  message:"LOGIN SUCCESSFULL"
                 }
               })
               
@@ -38,4 +38,60 @@ export function loginmiddleware(data){
     }
 }
 
+
+export function AddProcutToCartListMiddleware(data,url){
+
+  
+  return function(dispatch){
+      axios(
+          {
+              method:"POST",
+              url:url,
+              headers:{
+                 authtoken:localStorage.token
+              },
+              data:{
+                     cakeid:data.cakeid,
+                     name:data.name,
+                     image:data.image,
+                     price:data.price,
+                     weight:data.weight
+              }})
+                  .then(res => {
+                      const Data = res.data.data;
+                      console.log(res.data)
+                      dispatch({
+                        type:'ADDTOCART',
+                        payload:{
+                          data:Data,
+                     
+                        }
+                        
+                    }); 
+                     
+                      
+                  },(error)=>{
+                    console.log(error.data)
+                    });
+  }
+ 
+
+}
+export function RemoveProductFromCartListMiddleware(data,Url){
+  return function (dispatch){
+    axios({method:"POST",url:Url,headers:{authtoken:localStorage.token},data:{cakeid:data.cakeid}}).then((response)=>{
+     
+      dispatch({
+        type:"REMOVE_ONE_CART_ITEM",
+        payload:{
+          status:true
+        }
+      })
+    
+     
+     },(error)=>{
+
+     });
+  }
+}
 // export default loginmiddleware
