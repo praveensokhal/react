@@ -12,6 +12,7 @@ import Carddetails from './components/Carddetails';
 import Checkout from './components/Checkout';
 import './components/component.css'
 import Footer from './components/Footer';
+import Cart from './components/Cart';
 
 var details = {
   username :"",
@@ -39,7 +40,7 @@ console.log("apii env",process.env)
                 <Route exact path="/login" component={ (props)=><Login {...props} callme={myphone}/>}></Route>
                 <Route exact path ="/search" component ={Search}></Route>
                 <Route exact path = "/cake/:cakeid" component = {Carddetails}></Route>
-
+                <Route  path="/cart" component= {Cart}></Route>
                 <Route  path="/checkout" component= {Checkout}></Route>
                 <Route exact path="/signup" component={ Signup }></Route>
                 <Route exact path="/*" component={Pagenotfound}></Route>

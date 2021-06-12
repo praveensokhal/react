@@ -3,15 +3,16 @@
 import axios from "axios";
 
 export function loginmiddleware(data){
+  
     return function (dispatch){
         axios({method:"POST",url:process.env.REACT_APP_BASE_API_URL+"/login",data:{email:data.email,password:data.password}}).then((response)=>{
-     
+          console.log(response.data)
             if(response.data.message === "Invalid Credentials"){
-    
+              // errormessage = "INVALID CREDENTIAL"
                 dispatch({
-                    type:"LOGIN",
+                    type:"LOGIN_ERROR",
                     payload:{
-                      token:response.data.token
+                      message:"INVALID CREDENITAL"
                     }
                   })
             }else{
@@ -20,7 +21,8 @@ export function loginmiddleware(data){
              dispatch({
                 type:"LOGIN",
                 payload:{
-                  token:response.data.token
+                  token:response.data.token,
+                  message:"LOGIN SUCCESSFULl"
                 }
               })
               
@@ -29,6 +31,7 @@ export function loginmiddleware(data){
         
       
          },(error)=>{
+          console.log(error.data)
            //setMessageDisplay(error.data)
           
          });

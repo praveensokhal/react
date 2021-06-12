@@ -9,8 +9,17 @@ isloading:false
         case "LOGIN":{
             state = {...state}
             state["token"] = action.payload?.token
-            // alert(state.token)
+            state["message"] = action.payload?.message
             state["isloggedin"]=true
+            state["isloading"] = false
+            return state
+        }
+        case "LOGIN_ERROR":{
+            state = {...state}
+            state["token"] = undefined
+            state["message"] = action.payload?.message
+            state["isloggedin"]=false
+            state["isloading"] = true
             return state
         }
         default:

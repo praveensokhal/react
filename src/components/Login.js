@@ -4,7 +4,6 @@ import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import AuthReducer from "../reduxstore/AuthReducer";
 import {loginmiddleware} from "../reduxstore/middlewares"
-const apiurl="https://apibyashu.herokuapp.com/api/login"
 let  Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,7 +19,7 @@ let  Login = (props) => {
       e.preventDefault();
       var data= {email:email,password:password}
       // console.log("dataaaa", this.login)
-    props.dispatch(loginmiddleware(data))
+     props.dispatch(loginmiddleware(data))
    
   }
 
@@ -62,7 +61,7 @@ let  Login = (props) => {
   );
 }
 Login =connect(function(state,props){
-	alert("props" + JSON.stringify(props))
+	// alert("props lognnn" + JSON.stringify(state.AuthReducer))
   if(state.AuthReducer?.isloggedin==true){
       props.history.push("/")
   }else{

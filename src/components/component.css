@@ -5,7 +5,7 @@
   height: 70px;
 }
 .main-layout{
-  margin: 50px;
+  margin-bottom: 150px;
 }
 .footer {
   position: fixed;
@@ -39,8 +39,8 @@
 }
  
 .shopping-cart .item {
-  padding: 20px 30px;
-  height: 220px;
+  padding: 40px 60px;
+  /* height: 220px; */
   display: flex;
   margin-bottom: 15px;
   /* background-color: red; */
@@ -51,36 +51,78 @@
   border-bottom:  1px solid #E1E8EE;
 }
 .shopping-cart .image {
-  margin-right: 50px;
+  margin-right: 0;
+  padding-left: 15px;
 }
-.shopping-cart img {
+.shopping-cart .image img {
  position: relative;
+ height: 194px;
+ width: 167px;
 
 }
 /*  
 Let’s add some basic style to  product name and description. */
-.shopping-cart .description {
+.shopping-cart .details {
   padding-top: 10px;
-  margin-right: 60px;
-  width: 505px;
-  /* background-color: red; */
 }
+.shopping-cart table thead{
+  border-bottom: 1px solid #E1E8EE;
  
-.shopping-cart .description span {
+}
+
+.shopping-cart .details span {
   display: block;
-  font-size: 14px;
+  font-size: 16px;
+  color: #43484D;
+  /* font-weight: 400; */
+}
+.shopping-cart .details span:first-child {
+  margin-bottom: 15px;
+
+}
+.shopping-cart .details span:last-child {
+  margin-top: 20px;
+
+}
+
+
+.shopping-cart .quantity {
+  width: 15px;
+  margin-top: 23px;
+  color: #86939E;
+  height: 10px;
+  /* background-color:red; */
+}
+ .shopping-cart  input{
+  width: 30px;
+ }
+ .total-price{
+  
+    margin-left: 31px;
+    font-size: 16px;
+    color: #43484D;
+    font-weight: 400;
+}
+.shopping-cart .total-amount{
+  padding-left: 550px;
+}
+.shopping-cart .total-amount span {
+  display: block;
+  font-size: 16px;
+  padding-left: 50px;
   color: #43484D;
   font-weight: 400;
 }
-.shopping-cart .description span:first-child {
-  margin-bottom: 5px;
+.shopping-cart .total-amount span:first-child {
+  margin-bottom: 15px;
+  display: inline-block
+
 }
-.shopping-cart .description span:last-child {
-  font-weight: 300;
-  margin-top: 8px;
-  color: #86939E;
+.shopping-cart .total-amount span:last-child {
+  margin-top: 20px;
+  
+
 }
- 
  .Coursel-img
  {
     height: 500px !important ;
@@ -102,7 +144,35 @@ Let’s add some basic style to  product name and description. */
   padding-top: 20px;
   margin: 116px 35px;
 }
+.jumbotron{
+  height: 100px;
+}
+.jumbotron h1{
 
+  text-transform: uppercase;
+  font-family: math;
+  color: silver;
+  font-size: 52px;
+
+}
+.form-title{
+  font-weight: bolder;
+    font-size: 44px;
+    font-family: cursive;
+    text-transform: uppercase;
+}
+.jumbotron .btn {
+  cursor: alias;
+  margin-top: 36px;
+  margin-right: 33px;
+}
+.address-details{
+  padding: 36px 92px 100px;
+}
+.address-details .form-group .form-control{
+background-color: #d0c6c6;
+margin: 15px 0px 17px 0px;
+}
 /* The navigation menu links */
 .sidenav a {
   padding: 6px 8px 6px 16px;
@@ -193,6 +263,7 @@ a:hover{
 .image-size{
   height: 250px;
   width: 100%;
+ 
 }
 .card{
   border: 0.40rem solid #325b83;
@@ -393,12 +464,13 @@ p {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
-  display: flex;
+  display: inline-block;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   -webkit-flex-direction: column;
       -ms-flex-direction: column;
-          flex-direction: column; }
+          flex-direction: column; 
+        padding-left: 13px;}
 
 .colors {
   -webkit-box-flex: 1;
@@ -527,3 +599,15 @@ a{
   color: aqua;
 }
 }
+.page-not-found{
+ 
+  text-transform: uppercase;
+  text-align: center;
+  padding: 202px;
+}
+.page-not-found h1{
+color: rebeccapurple;
+}
+.page-not-found img{
+ height : 350px
+  }

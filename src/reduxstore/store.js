@@ -5,7 +5,7 @@ import thunk from "redux-thunk"
 
 
 let middle = store=>next=>action=>{
-    alert("riswat do")
+    // alert("riswat do")
     next(action)
 }
 var reducers = combineReducers({AuthReducer ,cartReducer})

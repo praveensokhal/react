@@ -1,11 +1,10 @@
 import {useState} from "react";
 import {Link, Router, withRouter} from "react-router-dom";
-
 import { connect } from "react-redux";
 // import axios from "axios";
 
 let Navbar= (props)=>{
- 
+  const [message,setMessageDisplay]=useState(props.AuthReducer?.message)
   let searchstring=""
   console.log("login",props)
   let  search = (event)=>{
@@ -42,7 +41,7 @@ let Navbar= (props)=>{
               <Link to="/">
             <a className="navbar-brand" href="#">    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSR35BYDTAQyRHRn4bT3iT1QgKLGJdxfnTatA&usqp=CAU" width="30" height="30" alt=""/> {props.details.projectname}</a>
           
-
+            <alert>{message}</alert>
 
               </Link> 
               <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,7 +63,7 @@ let Navbar= (props)=>{
 
                 </li>
                 </ul>
-                {localStorage.token && <Link to="/checkout">
+                {localStorage.token && <Link to="/cart">
                 <button className="search btn btn-primary " style={{"marginRight":"13px"}}><i class="fa fa-shopping-cart pl-0"></i></button>
                 </Link> }
                 
@@ -87,5 +86,16 @@ let Navbar= (props)=>{
 }
 
 
-Navbar = withRouter(Navbar)
-export default connect()(Navbar); 
+// Navbar = withRouter(Navbar)
+Navbar =connect(function(state,props){
+
+  if(state.AuthReducer?.message==true){
+     this.setMessageDisplay(state.AuthReducer?.message)
+     alert("props navbar" + JSON.stringify(state.AuthReducer))
+  }else{
+	  return {
+		  isloading:state.AuthReducer?.isloading
+	  }
+  }
+})(Navbar) 
+export default  withRouter(Navbar); 

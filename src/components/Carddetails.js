@@ -1,8 +1,6 @@
 
 import {Link, Router, useParams, withRouter} from "react-router-dom";
 import "./component.css";
-import {Link, Router, useParams, withRouter} from "react-router-dom";
-import "./component.css";
 import StarRatings from 'react-star-ratings';
 import axios from "axios";
 import { useEffect, useState } from 'react';
