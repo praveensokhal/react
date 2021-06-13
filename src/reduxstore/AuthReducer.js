@@ -22,6 +22,14 @@ isloading:false
             state["isloading"] = true
             return state
         }
+        case "LOGOUT":{
+            state = {...state}
+            state["token"] = action.payload?.token
+            state["message"] = action.payload?.message
+            state["isloggedin"]=false
+            state["isloading"] = false
+            return state
+        }
         default:
          return state
     }

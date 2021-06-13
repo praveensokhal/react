@@ -1,57 +1,53 @@
 
 import axios from "axios";
-import {Link, withRouter} from "react-router-dom"
+import {Link, withRouter,Redirect} from "react-router-dom"
 import { useEffect, useState } from 'react';
 import $ from 'jquery'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { connect } from "react-redux";
 import { CartListMiddleware,cartReducer,RemoveProductFromCartListMiddleware, AddProcutToCartListMiddleware } from "../reduxstore/middlewares";
 
 function Cart(props){
     
   var [islodding,setLodding]=useState(true)
-  var [data,setData] = useState([])
 
-  
   useEffect(()=>{
-    // cartReducer
-    axios(
-      {
-          method:"POST",
-          url:process.env.REACT_APP_BASE_API_URL+"/cakecart",
-          headers:{
-             authtoken:localStorage.token
-          },
-          data:{
-                JSON
-          }})
-              .then(res => {
-                const cartlist = res.data.data
-                setData(cartlist);
-                
-                 
-                  props.dispatch({
-                      type:'ADDTOCART',
-                      payload:{
-                        data:cartlist,
-                        
-                      }
-                      
-                  });
-                  setLodding(false)
-              },(error)=>{
-                console.log(error.data)
-                });
-
-  },islodding)
+    props.dispatch(CartListMiddleware());
+    setLodding(false)
+  },islodding);
   
   var decreaseCakeItem=(e,cakedata)=>{
     let  apiurl =process.env.REACT_APP_BASE_API_URL+"/removeonecakefromcart";
     props.dispatch(RemoveProductFromCartListMiddleware(cakedata,apiurl)); 
-    };
-  var Removecart=(e,cakeid)=>{
+  
+  };
+  var RemoveCakeItem=(e,cakedata)=>{
+    let  apiurl =process.env.REACT_APP_BASE_API_URL+"/removecakefromcart";
+    props.dispatch(RemoveProductFromCartListMiddleware(cakedata,apiurl)); 
+  
+  };
+  var Removecart=(e)=>{
 
-    axios({method:"POST",url:process.env.REACT_APP_BASE_API_URL+"/clearcart",headers:{authtoken:localStorage.token},data:{cakeid:cakeid}}).then((response)=>{
-       console.log("response remove cart",response.data)
+    axios(
+      {
+        method:"POST",
+        url:process.env.REACT_APP_BASE_API_URL+"/clearcart",
+        headers:{
+          authtoken:localStorage.token
+        },
+        data:{
+          // cakeid:cakeid
+        }
+      }).then((response)=>{
+       toast.warning(response.data.message)
+     props.dispatch(CartListMiddleware())
+     props.dispatch(
+       {
+         type:"EMPTY_CART",
+     
+       }
+     )
       
  },(error)=>{
    
@@ -60,25 +56,25 @@ function Cart(props){
 
   }
   var addCakeItem=(e,cakedata)=>{
-
-   
       let  apiurl =process.env.REACT_APP_BASE_API_URL+"/addcaketocart";
-      props.dispatch(AddProcutToCartListMiddleware(cakedata,apiurl)); 
-    
-  
+      props.dispatch(AddProcutToCartListMiddleware(cakedata,apiurl));
+      // props.dispatch(CartListMiddleware());
   };
   var changeTab=()=>{
     props.click();
    
 }
+if(localStorage.token){
 
-return (
+  return (
     <>
-
+      <div>
+        <ToastContainer autoClose={8000} />
+      </div>
 <div class={`${props.show==false?null:'container'}`}>
 
    {props.show==false?null:<div className="jumbotron mt-3 bg-dark mb-5">
-        <Link to="/checkout"><button className = "btn btn-primary pull-right"> checkout</button></Link>
+       {props.cart && props.cart.length>0? <Link to="/checkout"><button className = "btn btn-primary pull-right"> checkout</button></Link>:null}
         <h1> Your Cart</h1>
     
       </div> }
@@ -93,10 +89,10 @@ return (
         <table>
           <thead>
             <th > Item</th>
-            <th  className="text-center">qty</th>
-            <th  className="text-center">price</th>
-            <th className="text-center">total</th>
-            <th  className="text-center">delete</th>
+            <th  className="text-center">Quantity</th>
+            <th  className="text-center">Price</th>
+            <th className="text-center">Total</th>
+            <th  className="text-center"><button className="btn btn-outline-danger"><a onClick={(e)=>Removecart(e)}>Clear</a></button></th>
            
           </thead>
           
@@ -108,16 +104,16 @@ return (
           <tr>
             <td style={{width:'500px'}}>
               <div className="image">
-                <img src={value.image} alt="" />
+              <Link to={'/cake/'+value.cakeid}> <img src={value.image} alt="" /></Link>
                <div className="details">
                <span>{value.name}</span>
                 <span><strong>Weight :</strong> {value.weight} kg</span>
                   <span>
-                    <Link to={'/cake/'+value.cakeid}>
+                    {/* <Link to={'/cake/'+value.cakeid}>
                       <button className="btn btn-outline-danger btn-sm" type="button" name="button">
                         <i className="fa fa-eye" aria-hidden="true"></i>
                         </button>
-                    </Link>
+                    </Link> */}
                   </span>
                </div>
               </div>
@@ -125,7 +121,7 @@ return (
             <td className="text-center" style={{width:'140px'}}>
               
                 <span>
-                  <button className="  fa fa-minus" type="button" name="button" style={{marginRight:'14px'}} value={value.cakeid} onClick={(e)=>{decreaseCakeItem(e,value)}}> </button>
+                  {value.quantity===1 ?null: <button className="  fa fa-minus" type="button" name="button" style={{marginRight:'14px'}} value={value.cakeid} onClick={(e)=>{decreaseCakeItem(e,value)}}> </button>}
                     <input type="text" disabled name="name" value={value.quantity}/>
                     <button className="  fa fa-plus" type="button" name="button"   style={{marginLeft:'14px'}}value={value.cakeid} onClick={(e)=>{addCakeItem(e,value)}}>
           
@@ -136,7 +132,8 @@ return (
             <td className="text-center"> ₹ {Math.round((value.price / value.quantity),2)}</td>
 
             <td className="total-price text-center" value={value.price} >₹<strong className="price">{value.price}</strong></td>
-            <td class="text-center"><a class="remove-from-cart"  onClick={(e)=>Removecart(e,value.cakeid)} data-toggle="tooltip" title="" data-original-title="Remove item"><i class="fa fa-trash"></i></a></td>  
+            <td class="text-center">
+              <a class="remove-from-cart" onClick={(e)=>RemoveCakeItem(e,value)} data-toggle="tooltip" title="" data-original-title="Remove item"><i class="fa fa-trash"></i></a></td>  
           </tr>
         )
         })}
@@ -147,11 +144,12 @@ return (
         </table>
 
         <div className="shopping-cart-footer ">
+          <Link to="/"> <button className="btn btn-outline-info mt-5">back to shopping</button></Link>
         <h3 className="pull-right">
         Total :   
           <strong> ₹
             <span id="total">
-            {props.total}
+            {getTotal()}
             </span>
           </strong>
         </h3>
@@ -159,7 +157,7 @@ return (
       </div>
     {props.show==false?
 <div className="jumbotron mt-3 bg-dark mb-5">
-        <Link to="/checkout/order"><button className = "btn btn-primary pull-right" onClick={changeTab}> Confirm</button></Link>
+        <Link to="/checkout/details"><button className = "btn btn-primary pull-right" onClick={changeTab}> Confirm</button></Link>
         <h1> Final</h1>
     
       </div>:null }
@@ -167,7 +165,7 @@ return (
 
 
     </div>
-    :<center><img src="/asset/cart-empty.png" style={{width:'500px'}} />
+    :<center><img src="/asset/cart-empty.png" style={{width:'500px'}} alt="empty" />
     <p>Cart is Empty. <Link to="/"><strong>Click here </strong></Link>to see Cakes</p>
     </center>
 }
@@ -179,22 +177,31 @@ return (
 function getTotal(){
   var total = 0;
 
-  $('.price').each(function(){
+  $(document).ready(function(){
+    $('.price').each(function(){
       total += parseFloat(this.innerHTML)
   });
   $('#total').text(total);
+  localStorage.total_price=total
+  // console.log(localStorage)
+  })
+}
+
+}else{
+  return  <Redirect to='/login' />
 }
 
 
+
 }
 
 
-Cart= connect(function mapStateToProps(state,props){
+Cart =connect(function mapStateToProps(state,props){
  
   console.log("props cart" + JSON.stringify(state.cartReducer))
   return{
-    // cartReducer
-    cart:state.cartReducer,
+    message:state.cartReducer?.message,
+    cart:state.cartReducer?.cart,
     isLoading:state.cartReducer?.isLoading,
     token:state.AuthReducer?.token,
     total:state.cartReducer?.totalprice,

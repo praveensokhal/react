@@ -43,7 +43,10 @@ export function AddProcutToCartListMiddleware(data,url){
 
   
   return function(dispatch){
-      axios(
+    dispatch({
+      type:"CARTITEMS"
+    })
+    axios(
           {
               method:"POST",
               url:url,
@@ -59,17 +62,15 @@ export function AddProcutToCartListMiddleware(data,url){
               }})
                   .then(res => {
                       const Data = res.data.data;
-                      console.log(res.data)
+                   
                       dispatch({
                         type:'ADDTOCART',
                         payload:{
                           data:Data,
-                     
+                          message:res.data?.message
                         }
-                        
                     }); 
-                     
-                      
+                   dispatch(CartListMiddleware());
                   },(error)=>{
                     console.log(error.data)
                     });
@@ -82,16 +83,88 @@ export function RemoveProductFromCartListMiddleware(data,Url){
     axios({method:"POST",url:Url,headers:{authtoken:localStorage.token},data:{cakeid:data.cakeid}}).then((response)=>{
      
       dispatch({
-        type:"REMOVE_ONE_CART_ITEM",
+        type:"REMOVE_CART_ITEM",
         payload:{
-          status:true
+          status:true,
+          message:response.data.message
         }
       })
-    
-     
+      dispatch(CartListMiddleware());
      },(error)=>{
 
      });
+  }
+}
+export function CartListMiddleware(){
+  return function (dispatch){
+  dispatch({
+    type:"CARTITEMS"
+  })
+    axios(
+      {
+          method:"POST",
+          url:process.env.REACT_APP_BASE_API_URL+"/cakecart",
+          headers:{
+             authtoken:localStorage.token
+          },
+          data:{
+                JSON
+          }})
+              .then(res => {
+                const cartlist = res.data.data
+                console.log("show cart data",cartlist)
+              dispatch({
+                      type:'SHOW_CART',
+                      payload:{
+                        cakedata:cartlist,
+                      }
+                  });
+                
+              },(error)=>{
+                console.log(error.data)
+                });
+  }
+}
+
+
+export function PlaceOrderMiddleware(data,cart,price){
+  return function(dispatch){
+      axios(
+          {
+              method:"post",
+              url:process.env.REACT_APP_BASE_API_URL+'/addcakeorder',
+              headers:{
+                 authtoken:localStorage.token
+              },
+              data:{
+                city:data.city,
+                name:data.name,
+                address:data.address,
+                pincode:data.pincode,
+                phone:data.phone,
+                cakes:cart,
+                price:price
+              }})
+                  .then(res => {
+                      const Data = res.data.error!=null?[]:res.data.data;
+                      console.log(res.data)
+                      dispatch({
+                          type:'PLACEORDER',
+                          payload:{
+                           success:true,
+                           message:res.data.messageg
+                          }
+                      });
+                  },(error)=>{
+                    console.log(error.data)
+                  //   dispatch({
+                  //     type:'ERRORINORDER',
+                  //     payload:{
+                  //      success:true,
+                  //      message:error.data.message
+                  //     }
+                  // });
+                  });
   }
 }
 // export default loginmiddleware

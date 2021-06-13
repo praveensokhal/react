@@ -6,42 +6,46 @@ import axios from "axios";
 import { useEffect, useState } from 'react';
 import { connect } from "react-redux";
 import { CartListMiddleware , AddProcutToCartListMiddleware } from "../reduxstore/middlewares";
+import { toast } from "react-toastify";
 
 
 
 function Carddetails(props){
 var params = useParams(props)
-
-var apiurl_cart=process.env.REACT_APP_BASE_API_URL+"/addcaketocart/"
-
-console.log("proppp...........",props)
+// console.log("proppp...........",props)
 // /addcaketocart - { header:authtoken data:cakeid,name,image,price,weight } 
 var apiurl=process.env.REACT_APP_BASE_API_URL+"/cake/"+params.cakeid
 var [data,setData]=useState([]);
 var [islodding,setLodding]=useState(true)
-var [similarCake , setSimilarCakes]=useState()
         useEffect(()=>{
             axios({method:"GET",url:apiurl,data:JSON}).then((response)=>{
-                console.log("response",response.data.data)
+                
                 setData(response.data.data)
                 setLodding(false)
             },(error)=>{
-        
-                console.log("error..",error)
                 setLodding(false)
             });
     
 },islodding)
 
+
 var addtocart= (e)=>{
   
+   if(localStorage.token){
     let  apiurl =process.env.REACT_APP_BASE_API_URL+"/addcaketocart";
-      props.dispatch(AddProcutToCartListMiddleware(data,apiurl)); 
+    props.dispatch(AddProcutToCartListMiddleware(data,apiurl)); 
+    props.dispatch(CartListMiddleware());
+   }else{
+      
+       props.history.push("/login")
+       toast.warning("Please Login")
+   }
 }
 
 
     return(
 <div className="container-full">
+   
         <div className="container">
 
           {islodding &&  <div className=" text-center loaderbody">
@@ -142,4 +146,13 @@ var addtocart= (e)=>{
     )
 }
 
-export default connect()(Carddetails) 
+
+Carddetails =connect(function mapStateToProps(state,props){
+ 
+    console.log("props cart" + JSON.stringify(state.cartReducer))
+    return{
+      message:state.cartReducer?.message,
+      
+    }
+  })(Carddetails)
+  export default withRouter(Carddetails)

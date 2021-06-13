@@ -1,12 +1,21 @@
-import {useState} from "react";
+import {useState,useEffect} from "react";
 import {Link, Router, withRouter} from "react-router-dom";
 import { connect } from "react-redux";
 // import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 let Navbar= (props)=>{
-  const [message,setMessageDisplay]=useState(props.AuthReducer?.message)
+  // const [message,setMessageDisplay]=useState(props.AuthReducer?.message)
   let searchstring=""
-  console.log("login",props)
+  // console.log("login",props)
+  const [message,setMessage] = useState()
+  useEffect(()=>{
+   if(props.message){
+    setMessage(props.message);
+    toast.info(message);
+   }
+  });
   let  search = (event)=>{
    
     event.preventDefault()
@@ -25,9 +34,10 @@ let Navbar= (props)=>{
 
   console.log("login",props)
   props.dispatch({
-    type:"LOGIN",
+    type:"LOGOUT",
     payload:{
-      token:undefined
+      token:undefined,
+      isloggedin:false
     }
   })
   localStorage.clear();
@@ -35,13 +45,17 @@ let Navbar= (props)=>{
  }
 
     return(
+     <>
+     <div>
+       <ToastContainer autoClose={1000} />
+     </div>
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark navbar-fixed-top">
         <div className="container">
           <div className="col-6">
               <Link to="/">
             <a className="navbar-brand" href="#">    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSR35BYDTAQyRHRn4bT3iT1QgKLGJdxfnTatA&usqp=CAU" width="30" height="30" alt=""/> {props.details.projectname}</a>
           
-            <alert>{message}</alert>
+           
 
               </Link> 
               <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,6 +95,8 @@ let Navbar= (props)=>{
         </div>
       
       </nav>
+       
+     </>
     
     )
 }
@@ -91,7 +107,9 @@ Navbar =connect(function(state,props){
   // console.log("props navbar" + JSON.stringify(state.AuthReducer))
 	  return {
       token:state.AuthReducer?.token,
-		  isloading:state.AuthReducer?.isloading
+		  isloading:state.AuthReducer?.isloading,
+      message:state.cartReducer?.message || state.AuthReducer?.message
+
 	  }
   
 })(Navbar) 
