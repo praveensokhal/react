@@ -189,11 +189,12 @@ function getTotal(){
   localStorage.total_price=total
   // console.log(localStorage)
   })
-}
 
+}
 }else{
   return  <Redirect to='/login' />
 }
+
 
 
 

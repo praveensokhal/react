@@ -28,8 +28,6 @@ var [islodding,setLodding]=useState(true)
     
 },islodding)
 
-
-
 var addtocart= (e)=>{
   
    if(localStorage.token){
