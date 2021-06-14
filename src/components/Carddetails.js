@@ -41,7 +41,7 @@ var addtocart= (e)=>{
        props.history.push("/login")
        toast.warning("Please Login")
    }
-
+}
     return(
 <div className="container-full">
    
@@ -145,7 +145,7 @@ var addtocart= (e)=>{
     )
 }
 
-}
+
 Carddetails =connect(function mapStateToProps(state,props){
  
     console.log("props cart" + JSON.stringify(state.cartReducer))

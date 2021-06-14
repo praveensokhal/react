@@ -9,13 +9,13 @@ let Navbar= (props)=>{
   // const [message,setMessageDisplay]=useState(props.AuthReducer?.message)
   let searchstring=""
   // console.log("login",props)
-  const [message,setMessage] = useState()
-  useEffect(()=>{
-   if(props.message){
-    setMessage(props.message);
-    toast.info(message);
-   }
-  });
+  // const [message,setMessage] = useState()
+  // useEffect(()=>{
+  //  if(props.message){
+  //   setMessage(props.message);
+  //   toast.info(message);
+  //  }
+  // });
   let  search = (event)=>{
    
     event.preventDefault()
@@ -108,7 +108,7 @@ Navbar =connect(function(state,props){
 	  return {
       token:state.AuthReducer?.token,
 		  isloading:state.AuthReducer?.isloading,
-      message:state.cartReducer?.message || state.AuthReducer?.message
+      // message:state.cartReducer?.message || state.AuthReducer?.message
 
 	  }
   

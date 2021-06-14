@@ -3,13 +3,13 @@ function cartReducer (state={
    cart:[],
    totalprice:0,
 //    qty:0,
-    message:"",
+    // message:"",
    status:false,
 },action){
     switch(action.type){
     
         case "ADDTOCART":{
-            state["message"]= action.payload?.message
+            // state["message"]= action.payload?.message
             state = {...state};
           
             return state;
@@ -21,7 +21,7 @@ function cartReducer (state={
             return state
         }
         case "REMOVE_CART_ITEM" : {
-            state["message"]= action.payload?.message
+            // state["message"]= action.payload?.message
             state = {...state};
             state["status"]=action.payload?.status;
             
@@ -34,7 +34,7 @@ function cartReducer (state={
         }
      case "PLACEORDER":{
          state= {...state}
-        state["message"]= action.payload?.message
+        // state["message"]= action.payload?.message
          return state
      }
         default: return state

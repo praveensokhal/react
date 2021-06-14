@@ -13,6 +13,7 @@ import Checkout from './components/Checkout';
 import './components/component.css'
 import Footer from './components/Footer';
 import Cart from './components/Cart';
+import Orders from './components/Orders';
 
 var details = {
   username :"",
@@ -43,8 +44,9 @@ console.log("apii env",process.env)
                 <Route  path="/cart" component= {Cart}></Route>
                 <Route  path="/checkout" component= {Checkout}></Route>
                 <Route exact path="/signup" component={ Signup }></Route>
+
+                <Route exact path="/orders" component={Orders}></Route>
                 <Route exact path="/*" component={Pagenotfound}></Route>
-          
               </Switch>
           </div>
         <Footer></Footer>

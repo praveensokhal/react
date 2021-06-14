@@ -1,6 +1,7 @@
 
 
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export function loginmiddleware(data){
   
@@ -37,16 +38,31 @@ export function loginmiddleware(data){
          });
     }
 }
+// export function CakeDetails(){
+//   return function(dispatch){
+//     axios(
+//       {
+//         method:"GET",
+//         url:apiurl,
+//         data:JSON
+//       }
+//       ).then((response)=>{
 
+//   },(error)=>{
+//       setLodding(false)
+//   });
+//   }
+// }
 
 export function AddProcutToCartListMiddleware(data,url){
 
-  
+ 
   return function(dispatch){
     dispatch({
       type:"CARTITEMS"
     })
     axios(
+     
           {
               method:"POST",
               url:url,
@@ -61,17 +77,19 @@ export function AddProcutToCartListMiddleware(data,url){
                      weight:data.weight
               }})
                   .then(res => {
+                    // alert(JSON.stringify(data))
                       const Data = res.data.data;
-                   
+                   toast.success(res.data?.message);
                       dispatch({
                         type:'ADDTOCART',
                         payload:{
                           data:Data,
-                          message:res.data?.message
+                        
                         }
                     }); 
                    dispatch(CartListMiddleware());
                   },(error)=>{
+                    toast.success(error.data?.message);
                     console.log(error.data)
                     });
   }
@@ -81,16 +99,17 @@ export function AddProcutToCartListMiddleware(data,url){
 export function RemoveProductFromCartListMiddleware(data,Url){
   return function (dispatch){
     axios({method:"POST",url:Url,headers:{authtoken:localStorage.token},data:{cakeid:data.cakeid}}).then((response)=>{
-     
+     toast.success(response.data?.message)
       dispatch({
         type:"REMOVE_CART_ITEM",
         payload:{
           status:true,
-          message:response.data.message
+        //  message:response.data.message
         }
       })
       dispatch(CartListMiddleware());
      },(error)=>{
+       toast.warning(error.data?.message)
 
      });
   }

@@ -13,10 +13,14 @@ function Cart(props){
   var [islodding,setLodding]=useState(true)
 
   useEffect(()=>{
-    props.dispatch(CartListMiddleware());
-    setLodding(false)
-  },islodding);
+    if(localStorage.token){
+      props.dispatch(CartListMiddleware());
+      setLodding(false)
+    }else{
+      toast.warning("Please login")
+    }
   
+  },islodding);
   var decreaseCakeItem=(e,cakedata)=>{
     let  apiurl =process.env.REACT_APP_BASE_API_URL+"/removeonecakefromcart";
     props.dispatch(RemoveProductFromCartListMiddleware(cakedata,apiurl)); 
@@ -41,13 +45,13 @@ function Cart(props){
         }
       }).then((response)=>{
        toast.warning(response.data.message)
-     props.dispatch(CartListMiddleware())
-     props.dispatch(
-       {
-         type:"EMPTY_CART",
-     
-       }
-     )
+      props.dispatch(CartListMiddleware())
+      props.dispatch(
+        {
+          type:"EMPTY_CART",
+      
+        }
+      )
       
  },(error)=>{
    
@@ -90,7 +94,7 @@ if(localStorage.token){
           <thead>
             <th > Item</th>
             <th  className="text-center">Quantity</th>
-            <th  className="text-center">Price</th>
+            {/* <th  className="text-center">Price</th> */}
             <th className="text-center">Total</th>
             <th  className="text-center"><button className="btn btn-outline-danger"><a onClick={(e)=>Removecart(e)}>Clear</a></button></th>
            
@@ -129,7 +133,7 @@ if(localStorage.token){
                 </span>
                
             </td>
-            <td className="text-center"> ₹ {Math.round((value.price / value.quantity),2)}</td>
+            {/* <td className="text-center" onChange={(e)=>CakeDetails(e,value.cakeid)}> ₹{cakeprice} </td> */}
 
             <td className="total-price text-center" value={value.price} >₹<strong className="price">{value.price}</strong></td>
             <td class="text-center">
