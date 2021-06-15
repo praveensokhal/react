@@ -75,9 +75,9 @@ if(localStorage.token){
       <div>
         <ToastContainer autoClose={8000} />
       </div>
-<div class={`${props.show==false?null:'container'}`}>
+<div class={`${props.show===false?null:'container'}`}>
 
-   {props.show==false?null:<div className="jumbotron mt-3 bg-dark mb-5">
+   {props.show===false?null:<div className="jumbotron mt-3 bg-dark mb-5">
        {props.cart && props.cart.length>0? <Link to="/checkout"><button className = "btn btn-primary pull-right"> checkout</button></Link>:null}
         <h1> Your Cart</h1>
     
@@ -96,7 +96,7 @@ if(localStorage.token){
             <th  className="text-center">Quantity</th>
             {/* <th  className="text-center">Price</th> */}
             <th className="text-center">Total</th>
-            <th  className="text-center"><button className="btn btn-outline-danger"><a onClick={(e)=>Removecart(e)}>Clear</a></button></th>
+            <th  className="text-center"><button className="btn btn-outline-danger"><a  onClick={(e)=>Removecart(e)}>Clear</a></button></th>
            
           </thead>
           

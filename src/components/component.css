@@ -123,6 +123,86 @@ Let’s add some basic style to  product name and description. */
   
 
 }
+
+.orders img{
+  height: 150px;
+  width: 150px;
+  border-radius: 12px;
+
+}
+.image-orders-zoom{
+  /* padding: 50px; */
+  /* background-color: green; */
+  transition: transform .2s; /* Animation */
+  box-shadow:5px 5px 5px #999;
+  /* width: 200px;
+  height: 200px; */
+  display:inline-block;
+  margin: 0 auto;
+}
+.accordion-body{
+  
+  background-color:  azure;
+}
+.font-style-change{
+  font-family: cursive;
+  font-size: 25px;
+  text-align: center;
+  color: olive;
+}
+.accordion-body small{
+  font-family: cursive;
+}
+.order-person-details span{
+  display: block;
+  margin-left: 20px;
+}
+.image-orders-zoom:hover{
+  transform: scale(1.5); 
+}
+.admin-main-title{
+  /* font-family: Verdana, Geneva, Tahoma, sans-serif; */
+  /* -webkit-transition-timing-function: cubic-bezier(); */
+  font-size: 30px;
+  color: goldenrod;
+  text-transform: uppercase;
+  font-family: 'Times New Roman', Times, serif;
+}
+.cake-order-details{
+  margin-left: 20px ;
+  
+  display: inline-block;
+}
+.cake-order-details span{
+  display: block;
+}
+.add-cake-admin form label{
+color: peachpuff;
+}
+.admin-heading{
+  font-family: cursive;
+  font-size: 30px;
+  font-weight: 15px;
+  text-transform: uppercase;
+}
+/* .cake-order-details span:first-child{
+  margin-top: 10px;
+
+} */
+/* .cake-order-details small{
+  font-family: cursive;
+} */
+/* .orders table tr td:last-child{
+  margin-left: 100px;
+} */
+.order-payment-mode{
+  margin-left: 100px;
+  margin-top: -54px;
+
+}
+.order-payment-mode span{
+  display: block
+}
  .Coursel-img
  {
     height: 500px !important ;
@@ -153,6 +233,7 @@ Let’s add some basic style to  product name and description. */
   font-family: math;
   color: silver;
   font-size: 52px;
+  margin: -21px -5px -4px 0;
 
 }
 .form-title{
@@ -163,7 +244,7 @@ Let’s add some basic style to  product name and description. */
 }
 .jumbotron .btn {
   cursor: alias;
-  margin-top: 36px;
+  margin-top: 0;
   margin-right: 33px;
 }
 .address-details{

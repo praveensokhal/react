@@ -10,6 +10,7 @@ export function loginmiddleware(data){
           console.log(response.data)
             if(response.data.message === "Invalid Credentials"){
               // errormessage = "INVALID CREDENTIAL"
+              toast.warning(response.data.message)
                 dispatch({
                     type:"LOGIN_ERROR",
                     payload:{
@@ -17,16 +18,18 @@ export function loginmiddleware(data){
                     }
                   })
             }else{
-              console.log(response.data)
+           
               localStorage.token = response.data.token
+              localStorage.email = response.data.email
+              toast.success(response.data.message)
              dispatch({
                 type:"LOGIN",
                 payload:{
                   token:response.data.token,
-                  message:"LOGIN SUCCESSFULL"
+                  User_role :response.data.email
                 }
               })
-              
+              // dispatch(UserDetails(response.data.token))
            
             }
         
@@ -38,22 +41,29 @@ export function loginmiddleware(data){
          });
     }
 }
-// export function CakeDetails(){
-//   return function(dispatch){
-//     axios(
-//       {
-//         method:"GET",
-//         url:apiurl,
-//         data:JSON
-//       }
-//       ).then((response)=>{
-
-//   },(error)=>{
-//       setLodding(false)
-//   });
-//   }
-// }
-
+export function UserDetails(token){
+  return function(dispatch){
+    axios(
+      {
+        method:"GET",
+        url:process.env.REACT_APP_BASE_API_URL+"/getuserdetails",
+        headers:{
+          authtoken:token
+        },
+        data:JSON
+      }
+    ).then((response)=>{
+     
+    //  alert(JSON.stringify(response.data.data.email))
+      dispatch({
+        type:"USERDETAILS",
+        // User_role :response.data.data.email
+      })
+    },(error)=>{
+      console.log(error)
+    })
+  }
+}
 export function AddProcutToCartListMiddleware(data,url){
 
  

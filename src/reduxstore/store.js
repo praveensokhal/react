@@ -1,17 +1,23 @@
-import {createStore , combineReducers, applyMiddleware} from "redux"
-import AuthReducer from "./AuthReducer"
-import cartReducer from "./cartReducer"
-import thunk from "redux-thunk"
+
+import {createStore, combineReducers, applyMiddleware} from "redux";
+import AuthReducer from "./AuthReducer";
+import cartReducer from "./cartReducer";
+import thunk from "redux-thunk";
+import createSaga from "redux-saga"
+import MainSaga from "./sagas";
 
 
-let middle = store=>next=>action=>{
-    // alert("riswat do")
+let middle = store => next => action => {
+    let currentDate = new Date()
+    console.log(JSON.stringify(action.type) , 'action is dispatched at: ', currentDate)
     next(action)
 }
-var reducers = combineReducers({AuthReducer ,cartReducer})
 
-let store = createStore(reducers,applyMiddleware(middle,thunk))
+let sagMiddleware = createSaga()
+
+let reducers = combineReducers({AuthReducer, cartReducer})
+let store = createStore(reducers, applyMiddleware(middle, thunk, sagMiddleware))
+
+sagMiddleware.run(MainSaga)
 
 export default store
-
-

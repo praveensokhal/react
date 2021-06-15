@@ -59,12 +59,12 @@ var addtocart= (e)=>{
                         <p  className="text-muted"><small ><Link to="/"><span style={{"color":"black"}}>back</span></Link></small></p>
                        <div className="carddetails">
                      
-                       <img className=" carddetails-img  mb-3"  src={data.image}  alt="image"/>
+                       <img className=" carddetails-img  mb-3" alt="cake"  src={data.image} />
                        {
-                           data.eggless && <img className="veg-non-veg-type-img"  src="/asset/eggless.png"  alt="image"/>
+                           data.eggless && <img className="veg-non-veg-type-img" alt="veg" src="/asset/eggless.png"  />
                        }
                         {
-                           !data.eggless && <img className="veg-non-veg-type-img"  src="/asset/nonveg.png"  alt="image"/>
+                           !data.eggless && <img className="veg-non-veg-type-img" alt="nonveg" src="/asset/nonveg.png" />
                        }
                            </div>
                       

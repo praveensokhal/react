@@ -5,6 +5,8 @@ import axios from "axios";
 
 import Card from './Card.js';
 import { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 var apiurl = process.env.REACT_APP_BASE_API_URL+"/allcakes";
 // var apiurl = "https://fakestoreapi.com/products";
 
@@ -14,17 +16,23 @@ let Cardlist = (props)=>{
     var [data,setData]=useState([]);
    
 useEffect(()=>{
-    axios({method:"GET",url:apiurl,data:JSON}).then((response)=>{
-        console.log("propcale..",response.data.data)
-        // pageCount = Math.ceil(data.total_count / data.limit)
-      
-        setLodding(false)
-        setData(response.data.data)
-  
-      },(error)=>{
-          console.log("error..",error.data.data)
-          setLodding(false)
-      });
+   
+    // if(props.all_cakes.length===0) {
+   
+        axios({method:"GET",url:apiurl,data:JSON}).then((response)=>{
+            console.log("propcale..",response.data.data)
+            
+            // props.dispatch({
+            //     type:"ALLCAKES",
+            //     cakedata:response.data.data
+            // })
+            setLodding(false)
+            setData(response.data.data)
+          },(error)=>{
+              console.log("error all_Cakes")
+          });
+    // }
+    setLodding(false)
     
 },islodding)
     return(
@@ -36,7 +44,7 @@ useEffect(()=>{
                         <div class="loader4">
                         </div>
                     </div>}
-            { data.map((each,index)=>{   
+            {data.map((each,index)=>{   
                 return ( <>
                 <Card data={each} index ={index}></Card>
               
@@ -53,4 +61,10 @@ useEffect(()=>{
     )
    
 }
-export default Cardlist
+Cardlist=connect(function(state,props){
+    console.log("carList ",state.cartReducer)
+    return{
+        all_cakes: state.cartReducer?.all_cakes
+    }
+})(Cardlist)
+export default withRouter(Cardlist)
