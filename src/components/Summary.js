@@ -1,7 +1,5 @@
 
 import Cart from "./Cart";
-import {Link} from "react-router-dom"
-
 function Summary(props){
     
  

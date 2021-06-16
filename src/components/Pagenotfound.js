@@ -1,5 +1,5 @@
 
-import {Link, Router, withRouter} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 function  Pagenotfound(){
     return (
         <>
@@ -11,5 +11,5 @@ function  Pagenotfound(){
         </>
     )
 }
-Pagenotfound = withRouter(Pagenotfound)
-export default Pagenotfound
+// Pagenotfound = withRouter(Pagenotfound)
+export default withRouter(Pagenotfound)

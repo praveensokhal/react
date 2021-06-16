@@ -6,8 +6,6 @@ import { withRouter } from 'react-router'
 import { Link } from 'react-router-dom';
 import "./component.css"
 
-
-import $ from 'jquery'
 import { toast } from 'react-toastify';
 
 function Orders(props){
@@ -20,7 +18,7 @@ var [isloading,setLoading] = useState(true)
             axios({method:"POST",
         url:process.env.REACT_APP_BASE_API_URL+"/cakeorders",
         headers:{authtoken:localStorage.token},data:JSON}).then((response)=>{
-            console.log("ordersss.....",response.data)
+            // console.log("ordersss.....",response.data)
             setData(response.data.cakeorders)
             setLoading(false)
         },(error)=>{

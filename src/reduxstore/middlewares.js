@@ -175,8 +175,8 @@ export function PlaceOrderMiddleware(data,cart,price){
                 price:price
               }})
                   .then(res => {
-                      const Data = res.data.error!=null?[]:res.data.data;
-                      console.log(res.data)
+                      // const Data = res.data.error!=null?[]:res.data.data;
+                      // console.log(res.data)
                       dispatch({
                           type:'PLACEORDER',
                           payload:{
@@ -185,7 +185,7 @@ export function PlaceOrderMiddleware(data,cart,price){
                           }
                       });
                   },(error)=>{
-                    console.log(error.data)
+                    // console.log(error.data)
                   //   dispatch({
                   //     type:'ERRORINORDER',
                   //     payload:{

@@ -6,7 +6,7 @@ import { toast } from "react-toastify"
 
 
 function AddCakeForm(props){
-    if (!localStorage.token || props.User_role!=="kaurswt21@gmail.com" && props.User_role !=="ashu.lekhi0540@gmail.com") {
+    if (!localStorage.token || (props.User_role!=="kaurswt21@gmail.com" && props.User_role !=="ashu.lekhi0540@gmail.com")) {
         toast.warning("Oops you are not permitted to access this")
         props.history.push('/login')
     }
@@ -60,7 +60,7 @@ function AddCakeForm(props){
         props.dispatch({
             type: 'ADD_CAKE',
             payload: {name: cakeName, description: cakeDesc, price: cakePrice, weight: cakeWeight, image: cakeImage,
-                type: cakeType, eggless: cakeEggless, flavour: cakeFlav, ingredients: cakeIngredientsElements}
+                type: cakeType, eggless: cakeEggless, flavour: cakeFlav, ingredients: cakeIngredientsElements,history:props}
         })
         
         cakeIngredientsElements = []

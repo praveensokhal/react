@@ -16,22 +16,24 @@ let Cardlist = (props)=>{
     var [data,setData]=useState([]);
    
 useEffect(()=>{
-   
-    // if(props.all_cakes.length===0) {
+//    alert(props.all_cakes.length)
+    if(props.all_cakes.length===0) {
    
         axios({method:"GET",url:apiurl,data:JSON}).then((response)=>{
-            console.log("propcale..",response.data.data)
+            // console.log("propcale.............",response.data.data)
             
-            // props.dispatch({
-            //     type:"ALLCAKES",
-            //     cakedata:response.data.data
-            // })
-            setLodding(false)
-            setData(response.data.data)
+            props.dispatch({
+                type:"ALLCAKES",
+                payload:{
+                    cakedata:response.data.data
+                }
+            })
+            // setLodding(false)
+            // setData(response.data.data)
           },(error)=>{
               console.log("error all_Cakes")
           });
-    // }
+    }
     setLodding(false)
     
 },islodding)
@@ -44,10 +46,9 @@ useEffect(()=>{
                         <div class="loader4">
                         </div>
                     </div>}
-            {data.map((each,index)=>{   
+            {props.all_cakes.map((each,index)=>{   
                 return ( <>
-                <Card data={each} index ={index}></Card>
-              
+                    <Card data={each} index ={index}></Card>
               </>
                 )
         
@@ -62,9 +63,9 @@ useEffect(()=>{
    
 }
 Cardlist=connect(function(state,props){
-    console.log("carList ",state.cartReducer)
+    // console.log("carList ",state.cartReducer)
     return{
-        all_cakes: state.cartReducer?.all_cakes
+        all_cakes: state.cartReducer?.cakes
     }
 })(Cardlist)
 export default withRouter(Cardlist)

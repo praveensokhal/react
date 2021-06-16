@@ -202,7 +202,7 @@ function getTotal(){
 
 Cart =connect(function mapStateToProps(state,props){
  
-  console.log("props cart" + JSON.stringify(state.cartReducer))
+  // console.log("props cart" + JSON.stringify(state.cartReducer))
   return{
     message:state.cartReducer?.message,
     cart:state.cartReducer?.cart,

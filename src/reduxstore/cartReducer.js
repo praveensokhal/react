@@ -1,10 +1,9 @@
-import { data } from "jquery";
 
 function cartReducer (state={
 //    state:null,
    cart:[],
    totalprice:0,
- all_cakes:[],
+   cakes:[],
     // message:"",
    status:false,
 },action){
@@ -39,11 +38,18 @@ function cartReducer (state={
         // state["message"]= action.payload?.message
          return state
      }
-     case "ALLCAKES":{
+     case "ALLCAKES": {
         state = {...state}
-        state["all_cakes"] = [...action.payload?.cakedata];
+        // state = state.slice()
+        state.cakes = [...action.payload?.cakedata]
          return state
      }
+    //  case "ADD_CAKE_SUCCESS":{
+    //      state = {...state}
+    //      state.cakes = state.cakes.slice()
+    //      state.cakes = [...action.payload];
+    //      return state
+    //  }
         default: return state
     }
 

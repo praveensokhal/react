@@ -59,7 +59,7 @@ let Navbar= (props)=>{
            
 
               </Link> 
-              {props.User_role === "kaurswt21@gmail.com" || props.User_role === "ashu.lekhi0540@gmail.com" &&
+              {(props.User_role === "kaurswt21@gmail.com" || props.User_role === "ashu.lekhi0540@gmail.com") &&
               <>
                <div class="dropdown d-inline-block ">
                <button class="btn btn-primary dropdown-toggle" style={{"marginRight":"13px"}} type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

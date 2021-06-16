@@ -4,9 +4,11 @@ import { useEffect } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { toast } from "react-toastify";
-
+import ReactPaginate from "react-paginate";
 
 function AllProducts(props){
+    const [currentPage, setCurrentPage] = useState(0);
+   
     if (!localStorage.token ||props.User_role!=="ashu.lekhi0540@gmail.com" && props.User_role !== "kaurswt21@gmail.com" ) {
         toast.warning("Oops you are not permitted to access this")
         props.history.push('/login')
@@ -24,6 +26,16 @@ function AllProducts(props){
             setLoading(false)
         })
     },isloading)
+   
+    const PER_PAGE = 10;
+    const offset = currentPage * PER_PAGE;
+    const currentPageData = data
+    .slice(offset, offset + PER_PAGE);
+    // .map(({ thumburl }) => <img src={thumburl} />);
+const pageCount = Math.ceil(data.length / PER_PAGE);
+function handlePageClick({ selected: selectedPage }) {
+    setCurrentPage(selectedPage);
+}
     return(
         <>
         <div className="container card mt-5 p-5">
@@ -88,7 +100,17 @@ function AllProducts(props){
             </div>
            
         </div>
-
+        <ReactPaginate
+        previousLabel={"← Previous"}
+        nextLabel={"Next →"}
+        pageCount={pageCount}
+        onPageChange={handlePageClick}
+        containerClassName={"pagination"}
+        previousLinkClassName={"pagination__link"}
+        nextLinkClassName={"pagination__link"}
+        disabledClassName={"pagination__link--disabled"}
+        activeClassName={"pagination__link--active"}
+      />
    
         </>
     )
