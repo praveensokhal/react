@@ -16,13 +16,10 @@ import './components/component.css'
 import Footer from './components/Footer';
 import Cart from './components/Cart';
 import Orders from './components/Orders';
-<<<<<<< Updated upstream
 import Admin from './components/Admin';
 import AddCakeForm from './components/AddCakeForm';
 
 var projectname = "BakeHouse"
-=======
->>>>>>> Stashed changes
 
 
 function App() {

@@ -5,7 +5,6 @@ import { Redirect } from "react-router-dom";
 
 const addCake = (action) => {
     console.log("saga cake res",action.payload);
-//   return action.payload;
     return axios({
         url: process.env.REACT_APP_BASE_API_URL + '/addcake',
         method: "post",
@@ -28,10 +27,7 @@ export function *AddCakeGenerator(action, props) {
             type: "ADD_CAKE_SUCCESS",
             payload: result.data
         });
-        // <Redirect to={"/cake/"+result.data.cakeid}/>
-        // props.history.push("/cake/"+result.data.cakeid)
     } else {
-        // alert("Fail")
         toast.warning("Opps ! something failed")
         yield put({
             type: "ADD_CAKE_FAILURE"

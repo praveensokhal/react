@@ -46,7 +46,9 @@ return (
        <strong className="font-style-change"> Your Orders</strong>
        </div>
        <div className="card-body p-4 orders">
-       {
+     {data && data.length>0?
+     <>
+      {
            data.map((value,index)=>{
                    return(
                     <div className="accordion" id={`accordionExample${index}`}>
@@ -110,6 +112,10 @@ return (
                    )
                 })
             }
+     </>
+     
+     :<center><img src="/asset/cart-empty.png" style={{width:'500px'}} alt="empty" />
+    <p>You hav no orders. <Link to="/"><strong>Click here </strong></Link>to see Cakes</p></center>} 
        </div>
    </div>
  
