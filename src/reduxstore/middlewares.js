@@ -41,23 +41,24 @@ export function loginmiddleware(data){
          });
     }
 }
-export function UserDetails(token){
+export function UserDetails(){
   return function(dispatch){
     axios(
       {
         method:"GET",
         url:process.env.REACT_APP_BASE_API_URL+"/getuserdetails",
         headers:{
-          authtoken:token
+          authtoken:localStorage.token
         },
-        data:JSON
+        // data:{JSON}
+        data:JSON,
       }
     ).then((response)=>{
      
     //  alert(JSON.stringify(response.data.data.email))
       dispatch({
         type:"USERDETAILS",
-        // User_role :response.data.data.email
+        User_role :response.data.data.email
       })
     },(error)=>{
       console.log(error)

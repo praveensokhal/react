@@ -1,13 +1,14 @@
 import axios from "axios";
 import { useState } from "react";
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { toast } from "react-toastify";
 import ReactPaginate from "react-paginate";
+import Paginations from "./Pagination";
 
 function AllProducts(props){
-    const [currentPage, setCurrentPage] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
    
     if (!localStorage.token ||props.User_role!=="ashu.lekhi0540@gmail.com" && props.User_role !== "kaurswt21@gmail.com" ) {
         toast.warning("Oops you are not permitted to access this")
@@ -21,23 +22,126 @@ function AllProducts(props){
             url:process.env.REACT_APP_BASE_API_URL+"/allcakes",
             data:JSON
         }).then((response)=>{
+            // alert("hi")
             console.log("allPRoducts",response.data.data)
-            setData(response.data.data)
+            props.dispatch({
+                type:"ALLCAKES",
+                payload:{
+                    cakedata:response.data.data
+                }
+            })
+            // setData(response.data.data)
             setLoading(false)
         })
     },isloading)
-   
-    const PER_PAGE = 10;
-    const offset = currentPage * PER_PAGE;
-    const currentPageData = data
-    .slice(offset, offset + PER_PAGE);
-    // .map(({ thumburl }) => <img src={thumburl} />);
-const pageCount = Math.ceil(data.length / PER_PAGE);
-function handlePageClick({ selected: selectedPage }) {
-    setCurrentPage(selectedPage);
-}
+    let NUM_OF_RECORDS = props.all_cakes.length;
+    let LIMIT = 6;
+  
+    const onPageChanged = useCallback(
+      (event, page) => {
+        event.preventDefault();
+        setCurrentPage(page);
+      },
+      [setCurrentPage]
+    );
+// useEffect((page)=>{
+//     setCurrentPage(page);
+// }, [setCurrentPage])
+    
+    const currentData = props.all_cakes.slice(
+      (currentPage - 1) * LIMIT,
+      (currentPage - 1) * LIMIT + LIMIT
+    );
+ 
+const OnSorting = (e)=>{
+    let option = e.target.value;
+    switch(option){
+        case "high":{
+            const copy = [...props.all_cakes] // create copy of cases array (new array is created each time function is called)
+            copy.sort((a, b) => b.price - a.price) // mutate copy array
+            // setSortType(!sorted); // set new value for sortDown
+          
+            props.dispatch({
+                type:"ALLCAKES",
+                payload:{
+                    cakedata:copy
+                }
+            })
+            break;
+        }
+        case "low":{
+            const copy = [...props.all_cakes] // create copy of cases array (new array is created each time function is called)
+            copy.sort((a, b) => a.price - b.price) // mutate copy array
+            // setSortType(!sorted); // set new value for sortDown
+          
+            props.dispatch({
+                type:"ALLCAKES",
+                payload:{
+                    cakedata:copy
+                }
+            })
+            break;
+        }
+        case "new":{
+            const original = [...props.all_cakes]
+            original.sort((a, b) => b.cakeid - a.cakeid) 
+        
+      
+            props.dispatch({
+                type:"ALLCAKES",
+                payload:{
+                    cakedata:original
+                }
+            })
+            break;
+        }
+       
+        case "reset":{
+            const copy = [...props.all_cakes] // create copy of cases array (new array is created each time function is called)
+            copy.sort((a, b) => a.cakeid - b.cakeid) 
+        
+            props.dispatch({
+                type:"ALLCAKES",
+                payload:{
+                    cakedata:copy
+                }
+            })
+            break;
+        }
+        case "name":{
+            // alert(option)
+            const copy = [...props.all_cakes] // create copy of cases array (new array is created each time function is called)
+            copy.sort((a, b) => a.name.localeCompare(b.name)) 
+        
+            props.dispatch({
+                type:"ALLCAKES",
+                payload:{
+                    cakedata:copy
+                }
+            })
+            break;
+        }
+       
+    }
+    }
     return(
         <>
+        <div className="row mt-5 text-center">
+            <div className="col-md-2 offset-md-8 ">
+            {/* <i className="fa fa-sort" style={{position:"relative"}} aria-hidden="true"></i>  */}
+         
+   
+            <select className="form-select selectpicker"   id="mySelect" onChange={OnSorting}  data-show-icon="true" aria-label="Default select example">
+                    <option value="" selected>Sort by </option>
+
+                    <option value="new">Whats New</option>
+                    <option value="high">High to low</option>
+                    <option value="low">Low to high</option>
+                    <option value="name">by alphabets</option>   
+                    <option value="reset">Reset</option>
+                </select>
+            </div>
+       </div>
         <div className="container card mt-5 p-5">
             <div className="table-responsive ">
             <table className=" table table-striped">
@@ -55,7 +159,7 @@ function handlePageClick({ selected: selectedPage }) {
                     </tr>
                     </thead>
                     <tbody>
-                   {data.map((value,index)=>{
+                   {currentData.map((value,index)=>{
                        return (
                         <tr>
                         <td >
@@ -91,35 +195,38 @@ function handlePageClick({ selected: selectedPage }) {
                             
                             </div>
                         </td>
+              
                     </tr>
                        )
+                       
                    })}
                    </tbody>
                 </table>
-
+               
             </div>
            
         </div>
-        <ReactPaginate
-        previousLabel={"← Previous"}
-        nextLabel={"Next →"}
-        pageCount={pageCount}
-        onPageChange={handlePageClick}
-        containerClassName={"pagination"}
-        previousLinkClassName={"pagination__link"}
-        nextLinkClassName={"pagination__link"}
-        disabledClassName={"pagination__link--disabled"}
-        activeClassName={"pagination__link--active"}
-      />
-   
+        {props.all_cakes&&props.all_cakes.length>currentPage?
+        <div className="pagination-wrapper">
+                       <Paginations
+                           totalRecords={NUM_OF_RECORDS}
+                           pageLimit={LIMIT}
+                           pageNeighbours={2}
+                           onPageChanged={onPageChanged}
+                           currentPage={currentPage}
+                       />
+                   </div>
+       :null}
+      
         </>
     )
 }
 AllProducts = connect(
     function(state,props){
-        console.log("Admin form ",state.AuthReducer)
+        console.log("Admin form ",state.cartReducer)
         return{
-            User_role:state.AuthReducer?.User_role
+            User_role:state.AuthReducer?.User_role,
+            all_cakes :state.cartReducer?.cakes
         }
     }
 )(AllProducts)

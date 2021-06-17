@@ -391,6 +391,24 @@ a:hover{
   background: #da5767;
   border: 2px solid #da5767;
 }
+.current-page {
+  margin-top:0.5rem;
+  font-size: 0.8rem;
+  vertical-align: middle;
+  }
+  .pagination-wrapper {
+  display: flex;
+  /* background-color: rebeccapurple; */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 45px;
+  }
+  .pagination-wrapper ul li a{
+    height: 59px;
+    width: 65px;
+    font-size: 33px;
+  }
 .btn-primary:hover {
 
     

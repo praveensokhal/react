@@ -1,18 +1,22 @@
 
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router'
 import { Link } from 'react-router-dom';
 import "./component.css"
 
+import Paginations from "./Pagination";
+
 import { toast } from 'react-toastify';
 
 function Orders(props){
 
+    const [currentPage, setCurrentPage] = useState(1);
     var [data,setData] = useState([])
-var [isloading,setLoading] = useState(true)
-// useEffect
+    var [isloading,setLoading] = useState(true)
+
+    // useCallback
     useEffect(()=>{
         if(localStorage.token){
             axios({method:"POST",
@@ -32,11 +36,22 @@ var [isloading,setLoading] = useState(true)
 
 },isloading)
 
-function getDate(){
-  let date = new Date()
- 
-  
-  }
+let NUM_OF_RECORDS = data.length;
+let LIMIT = 6;
+
+const onPageChanged = useCallback(
+  (event, page) => {
+    event.preventDefault();
+    setCurrentPage(page);
+  },
+  [setCurrentPage]
+);
+
+
+const currentData = data.slice(
+  (currentPage - 1) * LIMIT,
+  (currentPage - 1) * LIMIT + LIMIT
+);
 return (
 <div className="container mt-5 p-2">
     <div className="card m-2">
@@ -47,7 +62,7 @@ return (
      {data && data.length>0?
      <>
       {
-           data.map((value,index)=>{
+           currentData.map((value,index)=>{
                    return(
                     <div className="accordion" id={`accordionExample${index}`}>
                         <div className="accordion-item">
@@ -110,6 +125,19 @@ return (
                    )
                 })
             }
+
+        {data&&data.length>currentPage?
+                <div className="pagination-wrapper">
+                            <Paginations
+                                totalRecords={NUM_OF_RECORDS}
+                                pageLimit={LIMIT}
+                                pageNeighbours={2}
+                                // pageCount={ Math.ceil(data.length/currentPage)}
+                                onPageChanged={onPageChanged}
+                                currentPage={currentPage}
+                            />
+                        </div>
+            :null}
      </>
      
      :<center><img src="/asset/cart-empty.png" style={{width:'500px'}} alt="empty" />

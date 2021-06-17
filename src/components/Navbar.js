@@ -14,9 +14,12 @@ let Navbar= (props)=>{
   let searchstring=""
  console.log(props)
   useEffect(()=>{
-  props.dispatch(UserDetails(localStorage.token))
-  setLoading(false)
-  },isloading);
+    if(localStorage.token){
+
+      props.dispatch(UserDetails())
+    }
+  // setLoading(false)
+  })
   let  search = (event)=>{
    
     event.preventDefault()
